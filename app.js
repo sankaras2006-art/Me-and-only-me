@@ -13,7 +13,7 @@ const CATEGORY_PALETTE = [
   { text: '#7A5C9E', bg: '#F3EFF8' },
   { text: '#4C7A83', bg: '#EAF3F4' },
   { text: '#8A6A45', bg: '#F6F0E9' },
-  { text: '#5C7CFA', bg: '#EFF1FE' },
+  { text: '#5B7A9D', bg: '#EAF0F5' },
 ];
 const MONTH_NAMES = ['січня','лютого','березня','квітня','травня','червня','липня','серпня','вересня','жовтня','листопада','грудня'];
 const MONTH_NAMES_NOM = ['Січень','Лютий','Березень','Квітень','Травень','Червень','Липень','Серпень','Вересень','Жовтень','Листопад','Грудень'];
@@ -264,15 +264,15 @@ function renderStats(monthTx, ty, tm) {
   barChart = new Chart(barCanvas, {
     type: 'bar',
     data: { labels, datasets: [
-      { label: 'Дохід', data: incomeData, backgroundColor: '#4F9B72', borderRadius: 3 },
-      { label: 'Витрати', data: expenseData, backgroundColor: '#C0584A', borderRadius: 3 },
+      { label: 'Дохід', data: incomeData, backgroundColor: '#7FA88F', borderRadius: 3 },
+      { label: 'Витрати', data: expenseData, backgroundColor: '#C97B5A', borderRadius: 3 },
     ]},
     options: {
       maintainAspectRatio: false,
       plugins: { tooltip: { callbacks: { label: (ctx) => `${ctx.dataset.label}: ${formatMoney(ctx.raw)}` } } },
       scales: {
-        x: { grid: { display: false }, ticks: { font: { family: 'Inter', size: 12 }, color: '#9098A3' } },
-        y: { grid: { color: '#ECEDEF' }, ticks: { font: { family: 'Inter', size: 11 }, color: '#9098A3' } }
+        x: { grid: { display: false }, ticks: { font: { family: 'Inter', size: 12 }, color: '#8A8478' } },
+        y: { grid: { color: '#EDEAE3' }, ticks: { font: { family: 'Inter', size: 11 }, color: '#8A8478' } }
       }
     }
   });
@@ -283,7 +283,7 @@ function openForm(type) {
   formType = type;
   selectedCategory = type === 'expense' ? EXPENSE_CATEGORIES[0] : INCOME_CATEGORIES[0];
   document.getElementById('modalTitle').textContent = type === 'income' ? 'Новий дохід' : 'Нова витрата';
-  document.getElementById('modalTitle').style.color = type === 'income' ? '#4F9B72' : '#C0584A';
+  document.getElementById('modalTitle').style.color = type === 'income' ? '#7FA88F' : '#C97B5A';
   document.getElementById('amountInput').value = '';
   document.getElementById('noteInput').value = '';
   document.getElementById('dateInput').value = todayISO();
