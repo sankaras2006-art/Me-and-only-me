@@ -284,6 +284,7 @@ function openForm(type) {
   selectedCategory = type === 'expense' ? EXPENSE_CATEGORIES[0] : INCOME_CATEGORIES[0];
   document.getElementById('modalTitle').textContent = type === 'income' ? 'Новий дохід' : 'Нова витрата';
   document.getElementById('modalTitle').style.color = type === 'income' ? '#7FA88F' : '#C97B5A';
+  document.getElementById('submitBtn').style.background = type === 'income' ? '#7FA88F' : '#C97B5A';
   document.getElementById('amountInput').value = '';
   document.getElementById('noteInput').value = '';
   document.getElementById('dateInput').value = todayISO();
