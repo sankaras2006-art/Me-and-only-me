@@ -5,7 +5,16 @@ const db = firebase.firestore();
 
 const EXPENSE_CATEGORIES = ['Їжа', 'Транспорт', 'Житло', 'Розваги', 'Здоров\u2019я', 'Одяг', 'Інше'];
 const INCOME_CATEGORIES = ['Зарплата', 'Фріланс', 'Подарунок', 'Інше'];
-const CATEGORY_PALETTE = ['#1F6F4A', '#3D6E9E', '#C9A227', '#A3402E', '#7A5C9E', '#4E7D3D', '#9E6B3D', '#3A8E8E'];
+const CATEGORY_PALETTE = [
+  { text: '#3E7C59', bg: '#EAF5EF' },
+  { text: '#3D6E9E', bg: '#EAF1F8' },
+  { text: '#A8792B', bg: '#FBF3E7' },
+  { text: '#B6584A', bg: '#FBEEEC' },
+  { text: '#7A5C9E', bg: '#F3EFF8' },
+  { text: '#4C7A83', bg: '#EAF3F4' },
+  { text: '#8A6A45', bg: '#F6F0E9' },
+  { text: '#5C7CFA', bg: '#EFF1FE' },
+];
 const MONTH_NAMES = ['січня','лютого','березня','квітня','травня','червня','липня','серпня','вересня','жовтня','листопада','грудня'];
 const MONTH_NAMES_NOM = ['Січень','Лютий','Березень','Квітень','Травень','Червень','Липень','Серпень','Вересень','Жовтень','Листопад','Грудень'];
 
@@ -30,16 +39,13 @@ function todayISO() {
   const local = new Date(d.getTime() - off * 60000);
   return local.toISOString().slice(0, 10);
 }
-function catColor(cat) {
+function catPair(cat) {
   let h = 0;
   for (let i = 0; i < cat.length; i++) h = (h * 31 + cat.charCodeAt(i)) >>> 0;
   return CATEGORY_PALETTE[h % CATEGORY_PALETTE.length];
 }
-function catRotation(cat) {
-  let h = 0;
-  for (let i = 0; i < cat.length; i++) h = (h * 17 + cat.charCodeAt(i)) >>> 0;
-  const options = [-2, -1, 0, 1, 2];
-  return options[h % options.length];
+function catColor(cat) {
+  return catPair(cat).text;
 }
 function escapeHtml(s) {
   const div = document.createElement('div');
@@ -189,7 +195,7 @@ function renderEntries(monthTx) {
     const dayLabel = `${dateObj.getDate()} ${MONTH_NAMES[dateObj.getMonth()]}`;
     const items = groups[d].map(t => `
       <div class="entry">
-        <span class="cat-tag" style="border-color:${catColor(t.category)};color:${catColor(t.category)};transform:rotate(${catRotation(t.category)}deg);">${escapeHtml(t.category)}</span>
+        <span class="cat-tag" style="color:${catPair(t.category).text};background:${catPair(t.category).bg};">${escapeHtml(t.category)}</span>
         <div class="entry-note">${escapeHtml(t.note || '')}</div>
         <div class="entry-amount ${t.type === 'income' ? 'inc' : ''}">${t.type === 'income' ? '+' : '\u2212'}${formatMoney(t.amount).replace('\u2212', '')}</div>
         <button class="del-btn" data-id="${t.id}" aria-label="Видалити запис">
@@ -258,15 +264,15 @@ function renderStats(monthTx, ty, tm) {
   barChart = new Chart(barCanvas, {
     type: 'bar',
     data: { labels, datasets: [
-      { label: 'Дохід', data: incomeData, backgroundColor: '#1F6F4A', borderRadius: 3 },
-      { label: 'Витрати', data: expenseData, backgroundColor: '#A3402E', borderRadius: 3 },
+      { label: 'Дохід', data: incomeData, backgroundColor: '#4F9B72', borderRadius: 3 },
+      { label: 'Витрати', data: expenseData, backgroundColor: '#C0584A', borderRadius: 3 },
     ]},
     options: {
       maintainAspectRatio: false,
       plugins: { tooltip: { callbacks: { label: (ctx) => `${ctx.dataset.label}: ${formatMoney(ctx.raw)}` } } },
       scales: {
-        x: { grid: { display: false }, ticks: { font: { family: 'IBM Plex Sans', size: 12 }, color: '#7A857F' } },
-        y: { grid: { color: '#DEDFD6' }, ticks: { font: { family: 'IBM Plex Mono', size: 11 }, color: '#7A857F' } }
+        x: { grid: { display: false }, ticks: { font: { family: 'Inter', size: 12 }, color: '#9098A3' } },
+        y: { grid: { color: '#ECEDEF' }, ticks: { font: { family: 'Inter', size: 11 }, color: '#9098A3' } }
       }
     }
   });
@@ -277,7 +283,7 @@ function openForm(type) {
   formType = type;
   selectedCategory = type === 'expense' ? EXPENSE_CATEGORIES[0] : INCOME_CATEGORIES[0];
   document.getElementById('modalTitle').textContent = type === 'income' ? 'Новий дохід' : 'Нова витрата';
-  document.getElementById('modalTitle').style.color = type === 'income' ? '#1F6F4A' : '#A3402E';
+  document.getElementById('modalTitle').style.color = type === 'income' ? '#4F9B72' : '#C0584A';
   document.getElementById('amountInput').value = '';
   document.getElementById('noteInput').value = '';
   document.getElementById('dateInput').value = todayISO();
@@ -293,7 +299,7 @@ function renderCatPicker() {
   const picker = document.getElementById('catPicker');
   picker.innerHTML = cats.map(c => `<button type="button" class="cat-choice${c === selectedCategory ? ' selected' : ''}"
     data-cat="${escapeHtml(c)}"
-    style="${c === selectedCategory ? `background:${catColor(c)};border-color:${catColor(c)};` : ''}">${escapeHtml(c)}</button>`).join('');
+    style="${c === selectedCategory ? `background:${catColor(c)};` : ''}">${escapeHtml(c)}</button>`).join('');
   picker.querySelectorAll('.cat-choice').forEach(btn => {
     btn.addEventListener('click', () => {
       selectedCategory = btn.dataset.cat;
