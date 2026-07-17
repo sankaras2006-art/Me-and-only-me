@@ -40,6 +40,11 @@
     border:1px solid var(--border);border-radius:8px;padding:10px 12px;margin-top:6px;margin-bottom:14px;outline:none;color:var(--ink);background:var(--bg);}
   .auth-box input[type=email]:focus,.auth-box input[type=password]:focus{border-color:var(--accent);}
   .auth-error{color:var(--expense);font-size:13px;margin-bottom:10px;display:none;}
+  .auth-info{color:var(--income);font-size:13px;margin-bottom:10px;display:none;}
+  .auth-options-row{display:flex;align-items:center;justify-content:space-between;margin:-6px 0 14px;gap:10px;}
+  .remember-me{display:flex;align-items:center;gap:6px;font-size:12.5px;color:var(--ink-muted);cursor:pointer;user-select:none;}
+  .remember-me input{width:15px;height:15px;accent-color:var(--accent);cursor:pointer;margin:0;}
+  #forgotPasswordLink{font-size:12.5px;color:var(--accent);font-weight:600;cursor:pointer;text-decoration:none;white-space:nowrap;}
   .auth-submit{width:100%;padding:12px 0;border-radius:10px;border:none;cursor:pointer;color:#fff;background:var(--accent);
     font-size:14.5px;font-weight:600;font-family:'Inter',sans-serif;}
   .auth-submit:disabled{opacity:.6;cursor:default;}
@@ -150,7 +155,15 @@
     <input type="email" id="authEmail" autocomplete="email">
     <label class="field-label" id="authPasswordLabel">Пароль</label>
     <input type="password" id="authPassword" autocomplete="current-password">
+    <div class="auth-options-row">
+      <label class="remember-me">
+        <input type="checkbox" id="rememberMe" checked>
+        <span id="rememberMeLabel">Запам'ятати мене</span>
+      </label>
+      <a id="forgotPasswordLink">Забув(ла) пароль?</a>
+    </div>
     <div class="auth-error" id="authError"></div>
+    <div class="auth-info" id="authInfo"></div>
     <button class="auth-submit" id="authSubmit">Увійти</button>
     <div class="auth-switch" id="authSwitch">Ще немає акаунта? <a id="authToggle">Зареєструватися</a></div>
     <div class="lang-row" id="authLangRow"></div>

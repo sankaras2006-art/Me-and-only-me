@@ -22,6 +22,10 @@ const T = {
     err_emailInUse: 'Цей email вже зареєстровано. Спробуй увійти',
     err_invalidCred: 'Невірний email або пароль', err_userNotFound: 'Акаунт з таким email не знайдено',
     err_tooMany: 'Забагато спроб. Спробуй трохи пізніше', err_generic: 'Щось пішло не так. Спробуй ще раз',
+    rememberMe: 'Запам’ятати мене', forgotPassword: 'Забув(ла) пароль?',
+    enterEmailFirst: 'Спочатку введи свій email',
+    resetSent: 'Лист для відновлення паролю надіслано на {email}',
+    err_resetFailed: 'Не вдалося надіслати лист. Перевір email і спробуй ще раз',
     balanceLabel: 'Загальний баланс', logout: 'Вийти',
     incomeMonthLabel: 'Дохід за місяць', expenseMonthLabel: 'Витрати за місяць',
     tabEntries: 'Записи', tabStats: 'Статистика',
@@ -54,6 +58,10 @@ const T = {
     err_emailInUse: 'Этот email уже зарегистрирован. Попробуй войти',
     err_invalidCred: 'Неверный email или пароль', err_userNotFound: 'Аккаунт с таким email не найден',
     err_tooMany: 'Слишком много попыток. Попробуй позже', err_generic: 'Что-то пошло не так. Попробуй ещё раз',
+    rememberMe: 'Запомнить меня', forgotPassword: 'Забыл(а) пароль?',
+    enterEmailFirst: 'Сначала введи свой email',
+    resetSent: 'Письмо для восстановления пароля отправлено на {email}',
+    err_resetFailed: 'Не удалось отправить письмо. Проверь email и попробуй ещё раз',
     balanceLabel: 'Общий баланс', logout: 'Выйти',
     incomeMonthLabel: 'Доход за месяц', expenseMonthLabel: 'Расходы за месяц',
     tabEntries: 'Записи', tabStats: 'Статистика',
@@ -86,6 +94,10 @@ const T = {
     err_emailInUse: 'Ten email już zarejestrowano. Spróbuj się zalogować',
     err_invalidCred: 'Nieprawidłowy email lub hasło', err_userNotFound: 'Nie znaleziono konta z tym emailem',
     err_tooMany: 'Zbyt wiele prób. Spróbuj później', err_generic: 'Coś poszło nie tak. Spróbuj ponownie',
+    rememberMe: 'Zapamiętaj mnie', forgotPassword: 'Zapomniałeś(aś) hasła?',
+    enterEmailFirst: 'Najpierw wpisz swój email',
+    resetSent: 'Wysłano email do resetowania hasła na {email}',
+    err_resetFailed: 'Nie udało się wysłać emaila. Sprawdź adres i spróbuj ponownie',
     balanceLabel: 'Saldo ogólne', logout: 'Wyloguj',
     incomeMonthLabel: 'Przychód w tym miesiącu', expenseMonthLabel: 'Wydatki w tym miesiącu',
     tabEntries: 'Wpisy', tabStats: 'Statystyki',
@@ -118,6 +130,10 @@ const T = {
     err_emailInUse: 'This email is already registered. Try logging in',
     err_invalidCred: 'Incorrect email or password', err_userNotFound: 'No account found with this email',
     err_tooMany: 'Too many attempts. Try again later', err_generic: 'Something went wrong. Try again',
+    rememberMe: 'Remember me', forgotPassword: 'Forgot password?',
+    enterEmailFirst: 'Enter your email first',
+    resetSent: 'Password reset email sent to {email}',
+    err_resetFailed: 'Could not send the email. Check the address and try again',
     balanceLabel: 'Total balance', logout: 'Log out',
     incomeMonthLabel: 'Income this month', expenseMonthLabel: 'Expenses this month',
     tabEntries: 'Entries', tabStats: 'Stats',
@@ -241,6 +257,8 @@ function applyStaticTranslations() {
   document.getElementById('authSub').textContent = t('authSub');
   document.getElementById('authEmailLabel').textContent = t('emailLabel');
   document.getElementById('authPasswordLabel').textContent = t('passwordLabel');
+  document.getElementById('rememberMeLabel').textContent = t('rememberMe');
+  document.getElementById('forgotPasswordLink').textContent = t('forgotPassword');
   setAuthMode(authMode);
   document.getElementById('balanceLabel').textContent = t('balanceLabel');
   document.getElementById('logoutBtn').textContent = t('logout');
@@ -345,6 +363,7 @@ function setAuthMode(mode) {
     ? `${t('switchToSignup')} <a id="authToggle">${t('signupBtn')}</a>`
     : `${t('switchToLogin')} <a id="authToggle">${t('loginBtn')}</a>`;
   document.getElementById('authError').style.display = 'none';
+  document.getElementById('authInfo').style.display = 'none';
   document.getElementById('authToggle').addEventListener('click', () => setAuthMode(mode === 'login' ? 'signup' : 'login'));
 }
 
@@ -353,9 +372,12 @@ document.getElementById('authToggle').addEventListener('click', () => setAuthMod
 document.getElementById('authSubmit').addEventListener('click', async () => {
   const email = document.getElementById('authEmail').value.trim();
   const password = document.getElementById('authPassword').value;
+  const remember = document.getElementById('rememberMe').checked;
   const errEl = document.getElementById('authError');
+  const infoEl = document.getElementById('authInfo');
   const btn = document.getElementById('authSubmit');
   errEl.style.display = 'none';
+  infoEl.style.display = 'none';
   if (!email || !password) {
     errEl.textContent = t('fillBoth');
     errEl.style.display = 'block';
@@ -364,6 +386,7 @@ document.getElementById('authSubmit').addEventListener('click', async () => {
   btn.disabled = true;
   btn.textContent = t('waitBtn');
   try {
+    await auth.setPersistence(remember ? firebase.auth.Auth.Persistence.LOCAL : firebase.auth.Auth.Persistence.SESSION);
     if (authMode === 'login') {
       await auth.signInWithEmailAndPassword(email, password);
     } else {
@@ -375,6 +398,33 @@ document.getElementById('authSubmit').addEventListener('click', async () => {
   } finally {
     btn.disabled = false;
     btn.textContent = authMode === 'login' ? t('loginBtn') : t('signupBtn');
+  }
+});
+
+document.getElementById('forgotPasswordLink').addEventListener('click', async () => {
+  const email = document.getElementById('authEmail').value.trim();
+  const errEl = document.getElementById('authError');
+  const infoEl = document.getElementById('authInfo');
+  const link = document.getElementById('forgotPasswordLink');
+  errEl.style.display = 'none';
+  infoEl.style.display = 'none';
+  if (!email) {
+    errEl.textContent = t('enterEmailFirst');
+    errEl.style.display = 'block';
+    return;
+  }
+  link.style.pointerEvents = 'none';
+  try {
+    await auth.sendPasswordResetEmail(email);
+    infoEl.textContent = t('resetSent', { email });
+    infoEl.style.display = 'block';
+  } catch (e) {
+    errEl.textContent = e.code === 'auth/invalid-email' ? t('err_invalidEmail')
+      : e.code === 'auth/user-not-found' ? t('err_userNotFound')
+      : t('err_resetFailed');
+    errEl.style.display = 'block';
+  } finally {
+    link.style.pointerEvents = '';
   }
 });
 
@@ -394,6 +444,8 @@ auth.onAuthStateChanged((user) => {
     document.getElementById('authScreen').style.display = 'flex';
     document.getElementById('authEmail').value = '';
     document.getElementById('authPassword').value = '';
+    document.getElementById('authInfo').style.display = 'none';
+    document.getElementById('rememberMe').checked = true;
   }
 });
 
