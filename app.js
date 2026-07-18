@@ -56,6 +56,21 @@ const T = {
     newCatPlaceholder: 'Нова категорія', addCatAria: 'Додати категорію', deleteCatAria: 'Видалити категорію',
     catLastError: 'Має залишитися хоча б одна категорія',
     catInUseConfirm: 'Ця категорія використовується у {count} записах. Видалити її?',
+    importSectionLabel: 'Імпорт даних', importBtnLabel: 'Імпортувати з Excel/CSV',
+    importModalTitle: 'Імпорт записів',
+    importHint: 'Завантаж файл Excel (.xlsx, .xls) або CSV зі своїми витратами й доходами. На наступному кроці зіставиш стовпці файлу з полями застосунку.',
+    chooseFileBtn: 'Обрати файл',
+    importFieldDate: 'Дата', importFieldAmount: 'Сума', importFieldType: 'Тип (витрата/дохід)',
+    importFieldCategory: 'Категорія', importFieldNote: 'Нотатка',
+    importNoneOption: '— не використовувати —', importSelectPlaceholder: '— оберіть стовпець —',
+    importTypeNote: 'Якщо стовпця "Тип" немає — визначимо автоматично: від\u2019ємна сума = витрата, додатна = дохід.',
+    importRequiredError: 'Обери стовпці для Дати і Суми',
+    importParseError: 'Не вдалося прочитати файл. Перевір формат.',
+    importEmptyError: 'У файлі немає рядків з даними',
+    importRunBtn: 'Імпортувати', importDoneBtn: 'Готово', importingBtn: 'Імпортуємо…',
+    importSummary: 'Імпортовано {imported} із {total} записів.',
+    importSkippedNote: 'Пропущено {skipped}: не вдалося розпізнати дату або суму в цих рядках.',
+    importWriteError: 'Не вдалося зберегти записи. Перевір інтернет-з\u2019єднання і спробуй ще раз.',
   },
   ru: {
     appTitle: 'My life',
@@ -104,6 +119,21 @@ const T = {
     newCatPlaceholder: 'Новая категория', addCatAria: 'Добавить категорию', deleteCatAria: 'Удалить категорию',
     catLastError: 'Должна остаться хотя бы одна категория',
     catInUseConfirm: 'Эта категория используется в {count} записях. Удалить её?',
+    importSectionLabel: 'Импорт данных', importBtnLabel: 'Импортировать из Excel/CSV',
+    importModalTitle: 'Импорт записей',
+    importHint: 'Загрузи файл Excel (.xlsx, .xls) или CSV со своими расходами и доходами. На следующем шаге сопоставишь столбцы файла с полями приложения.',
+    chooseFileBtn: 'Выбрать файл',
+    importFieldDate: 'Дата', importFieldAmount: 'Сумма', importFieldType: 'Тип (расход/доход)',
+    importFieldCategory: 'Категория', importFieldNote: 'Заметка',
+    importNoneOption: '— не использовать —', importSelectPlaceholder: '— выбери столбец —',
+    importTypeNote: 'Если столбца "Тип" нет — определим автоматически: отрицательная сумма = расход, положительная = доход.',
+    importRequiredError: 'Выбери столбцы для Даты и Суммы',
+    importParseError: 'Не удалось прочитать файл. Проверь формат.',
+    importEmptyError: 'В файле нет строк с данными',
+    importRunBtn: 'Импортировать', importDoneBtn: 'Готово', importingBtn: 'Импортируем…',
+    importSummary: 'Импортировано {imported} из {total} записей.',
+    importSkippedNote: 'Пропущено {skipped}: не удалось распознать дату или сумму в этих строках.',
+    importWriteError: 'Не удалось сохранить записи. Проверь интернет-соединение и попробуй ещё раз.',
   },
   pl: {
     appTitle: 'My life',
@@ -152,6 +182,21 @@ const T = {
     newCatPlaceholder: 'Nowa kategoria', addCatAria: 'Dodaj kategorię', deleteCatAria: 'Usuń kategorię',
     catLastError: 'Musi zostać przynajmniej jedna kategoria',
     catInUseConfirm: 'Ta kategoria jest używana w {count} wpisach. Usunąć ją?',
+    importSectionLabel: 'Import danych', importBtnLabel: 'Importuj z Excel/CSV',
+    importModalTitle: 'Import wpisów',
+    importHint: 'Wgraj plik Excel (.xlsx, .xls) lub CSV ze swoimi wydatkami i przychodami. W następnym kroku dopasujesz kolumny pliku do pól aplikacji.',
+    chooseFileBtn: 'Wybierz plik',
+    importFieldDate: 'Data', importFieldAmount: 'Kwota', importFieldType: 'Typ (wydatek/przychód)',
+    importFieldCategory: 'Kategoria', importFieldNote: 'Notatka',
+    importNoneOption: '— nie używaj —', importSelectPlaceholder: '— wybierz kolumnę —',
+    importTypeNote: 'Jeśli nie ma kolumny "Typ" — określimy automatycznie: ujemna kwota = wydatek, dodatnia = przychód.',
+    importRequiredError: 'Wybierz kolumny dla Daty i Kwoty',
+    importParseError: 'Nie udało się odczytać pliku. Sprawdź format.',
+    importEmptyError: 'Plik nie zawiera wierszy z danymi',
+    importRunBtn: 'Importuj', importDoneBtn: 'Gotowe', importingBtn: 'Importowanie…',
+    importSummary: 'Zaimportowano {imported} z {total} wpisów.',
+    importSkippedNote: 'Pominięto {skipped}: nie udało się rozpoznać daty lub kwoty w tych wierszach.',
+    importWriteError: 'Nie udało się zapisać wpisów. Sprawdź połączenie z internetem i spróbuj ponownie.',
   },
   en: {
     appTitle: 'My life',
@@ -200,6 +245,21 @@ const T = {
     newCatPlaceholder: 'New category', addCatAria: 'Add category', deleteCatAria: 'Delete category',
     catLastError: 'At least one category must remain',
     catInUseConfirm: 'This category is used in {count} entries. Delete it anyway?',
+    importSectionLabel: 'Data import', importBtnLabel: 'Import from Excel/CSV',
+    importModalTitle: 'Import entries',
+    importHint: 'Upload an Excel (.xlsx, .xls) or CSV file with your expenses and income. Next you\u2019ll match the file\u2019s columns to the app\u2019s fields.',
+    chooseFileBtn: 'Choose file',
+    importFieldDate: 'Date', importFieldAmount: 'Amount', importFieldType: 'Type (expense/income)',
+    importFieldCategory: 'Category', importFieldNote: 'Note',
+    importNoneOption: '— don\u2019t use —', importSelectPlaceholder: '— select a column —',
+    importTypeNote: 'If there\u2019s no "Type" column, we\u2019ll detect it automatically: negative amount = expense, positive = income.',
+    importRequiredError: 'Select columns for Date and Amount',
+    importParseError: 'Could not read the file. Check the format.',
+    importEmptyError: 'The file has no data rows',
+    importRunBtn: 'Import', importDoneBtn: 'Done', importingBtn: 'Importing…',
+    importSummary: 'Imported {imported} of {total} entries.',
+    importSkippedNote: 'Skipped {skipped}: could not recognize the date or amount in these rows.',
+    importWriteError: 'Could not save the entries. Check your internet connection and try again.',
   },
 };
 
@@ -295,6 +355,8 @@ let pendingDeleteType = 'entry'; // 'entry' | 'page'
 let pages = [];
 let unsubscribePages = null;
 let currentPageId = null; // page being edited, null = new page
+let importHeaders = [];
+let importRows = [];
 let pieChart = null, barChart = null;
 let unsubscribeSnapshot = null;
 let unsubscribeProfile = null;
@@ -367,6 +429,14 @@ function applyStaticTranslations() {
   document.getElementById('newIncomeCatInput').placeholder = t('newCatPlaceholder');
   document.getElementById('addExpenseCatBtn').setAttribute('aria-label', t('addCatAria'));
   document.getElementById('addIncomeCatBtn').setAttribute('aria-label', t('addCatAria'));
+  document.getElementById('importSectionLabel').textContent = t('importSectionLabel');
+  document.getElementById('openImportBtn').textContent = t('importBtnLabel');
+  document.getElementById('importModalTitle').textContent = t('importModalTitle');
+  document.getElementById('importHint').textContent = t('importHint');
+  document.getElementById('chooseImportFileBtn').textContent = t('chooseFileBtn');
+  document.getElementById('importTypeNote').textContent = t('importTypeNote');
+  document.getElementById('runImportBtn').textContent = t('importRunBtn');
+  document.getElementById('doneImportBtn').textContent = t('importDoneBtn');
   const cur = CURRENCIES[currentCurrency] || CURRENCIES.UAH;
   document.getElementById('amountLabel').textContent = t('amountLabel', { symbol: cur.symbol });
   renderLangPicker();
@@ -445,6 +515,204 @@ function addCategoryFromInput(type) {
   const label = input.value.trim();
   if (!label) return;
   addCategory(type, label).then(() => { input.value = ''; }).catch(() => {});
+}
+
+// ---- Імпорт з Excel/CSV ----
+const IMPORT_FIELDS = [
+  { key: 'date', required: true, keywords: ['дата', 'date', 'data'] },
+  { key: 'amount', required: true, keywords: ['сума', 'сумма', 'amount', 'kwota', 'value', 'sum'] },
+  { key: 'type', required: false, keywords: ['тип', 'type', 'typ'] },
+  { key: 'category', required: false, keywords: ['категор', 'category', 'kategoria'] },
+  { key: 'note', required: false, keywords: ['нотатк', 'заметк', 'опис', 'note', 'opis', 'notatka', 'description', 'коментар', 'комментарий'] },
+];
+const IMPORT_EXPENSE_KEYWORDS = ['витрат', 'расход', 'expense', 'wydat', 'exp'];
+const IMPORT_INCOME_KEYWORDS = ['дохід', 'доход', 'income', 'przych', 'inc'];
+
+function openImportModal() {
+  importHeaders = [];
+  importRows = [];
+  document.getElementById('importFileInput').value = '';
+  document.getElementById('importFileError').style.display = 'none';
+  document.getElementById('importMapError').style.display = 'none';
+  document.getElementById('importStepFile').style.display = 'block';
+  document.getElementById('importStepMap').style.display = 'none';
+  document.getElementById('importStepResult').style.display = 'none';
+  document.getElementById('importOverlay').classList.add('show');
+}
+
+function parseImportDate(val) {
+  if (val instanceof Date && !isNaN(val)) return toISODateLocal(val);
+  if (typeof val === 'number' && isFinite(val)) {
+    const d = new Date(Math.round((val - 25569) * 86400 * 1000));
+    if (!isNaN(d)) return toISODateLocal(d);
+  }
+  if (typeof val === 'string') {
+    const s = val.trim();
+    let m = s.match(/^(\d{4})-(\d{1,2})-(\d{1,2})/);
+    if (m) return `${m[1]}-${String(m[2]).padStart(2, '0')}-${String(m[3]).padStart(2, '0')}`;
+    m = s.match(/^(\d{1,2})[.\/](\d{1,2})[.\/](\d{4})$/);
+    if (m) return `${m[3]}-${String(m[2]).padStart(2, '0')}-${String(m[1]).padStart(2, '0')}`;
+    const d = new Date(s);
+    if (!isNaN(d)) return toISODateLocal(d);
+  }
+  return null;
+}
+function toISODateLocal(d) {
+  return `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, '0')}-${String(d.getDate()).padStart(2, '0')}`;
+}
+function parseImportAmount(val) {
+  if (typeof val === 'number' && isFinite(val)) return val;
+  if (typeof val === 'string') {
+    const cleaned = val.replace(/[^\d,.\-]/g, '').replace(',', '.');
+    if (!cleaned) return null;
+    const n = parseFloat(cleaned);
+    return isNaN(n) ? null : n;
+  }
+  return null;
+}
+
+function guessColumn(field) {
+  const hit = importHeaders.find(h => field.keywords.some(k => String(h).toLowerCase().includes(k)));
+  return hit || '';
+}
+
+function renderImportMapping() {
+  const list = document.getElementById('importMapList');
+  list.innerHTML = IMPORT_FIELDS.map(f => {
+    const guess = guessColumn(f);
+    const options = [`<option value="">${f.required ? t('importSelectPlaceholder') : t('importNoneOption')}</option>`]
+      .concat(importHeaders.map(h => `<option value="${escapeHtml(h)}"${h === guess ? ' selected' : ''}>${escapeHtml(h)}</option>`));
+    return `<div class="import-map-row">
+      <label class="field-label">${t('importField' + f.key.charAt(0).toUpperCase() + f.key.slice(1))}${f.required ? ' *' : ''}</label>
+      <select data-field="${f.key}">${options.join('')}</select>
+    </div>`;
+  }).join('');
+  list.querySelectorAll('select').forEach(sel => sel.addEventListener('change', renderImportPreview));
+  renderImportPreview();
+}
+
+function currentImportMapping() {
+  const map = {};
+  document.querySelectorAll('#importMapList select').forEach(sel => { map[sel.dataset.field] = sel.value; });
+  return map;
+}
+
+function renderImportPreview() {
+  const map = currentImportMapping();
+  const cols = IMPORT_FIELDS.filter(f => map[f.key]);
+  const preview = document.getElementById('importPreview');
+  if (!cols.length) { preview.innerHTML = ''; return; }
+  const rows = importRows.slice(0, 4);
+  preview.innerHTML = `<table><thead><tr>${cols.map(f => `<th>${t('importField' + f.key.charAt(0).toUpperCase() + f.key.slice(1))}</th>`).join('')}</tr></thead>
+    <tbody>${rows.map(r => `<tr>${cols.map(f => `<td>${escapeHtml(String(r[map[f.key]] ?? ''))}</td>`).join('')}</tr>`).join('')}</tbody></table>`;
+}
+
+document.getElementById('importFileInput').addEventListener('change', (e) => {
+  const file = e.target.files[0];
+  if (!file) return;
+  const errEl = document.getElementById('importFileError');
+  errEl.style.display = 'none';
+  const reader = new FileReader();
+  reader.onload = (ev) => {
+    try {
+      const wb = XLSX.read(ev.target.result, { type: 'array', cellDates: true });
+      const sheet = wb.Sheets[wb.SheetNames[0]];
+      const rows = XLSX.utils.sheet_to_json(sheet, { defval: '' });
+      if (!rows.length) {
+        errEl.textContent = t('importEmptyError');
+        errEl.style.display = 'block';
+        return;
+      }
+      importRows = rows;
+      importHeaders = Object.keys(rows[0]);
+      renderImportMapping();
+      document.getElementById('importStepFile').style.display = 'none';
+      document.getElementById('importStepMap').style.display = 'block';
+    } catch (err) {
+      errEl.textContent = t('importParseError');
+      errEl.style.display = 'block';
+    }
+  };
+  reader.onerror = () => { errEl.textContent = t('importParseError'); errEl.style.display = 'block'; };
+  reader.readAsArrayBuffer(file);
+});
+
+async function runImport() {
+  const map = currentImportMapping();
+  const errEl = document.getElementById('importMapError');
+  errEl.style.display = 'none';
+  if (!map.date || !map.amount) {
+    errEl.textContent = t('importRequiredError');
+    errEl.style.display = 'block';
+    return;
+  }
+  const btn = document.getElementById('runImportBtn');
+  btn.disabled = true;
+  btn.textContent = t('importingBtn');
+
+  const workingExpense = categoriesExpense.map(c => ({ ...c }));
+  const workingIncome = categoriesIncome.map(c => ({ ...c }));
+  let expenseChanged = false, incomeChanged = false;
+
+  function resolveCategoryId(type, rawLabel) {
+    const working = type === 'income' ? workingIncome : workingExpense;
+    if (!rawLabel) return working[0] ? working[0].id : null;
+    const found = working.find(c => c.label.trim().toLowerCase() === rawLabel.trim().toLowerCase());
+    if (found) return found.id;
+    const usedColors = working.map(c => c.colorIndex);
+    let colorIndex = working.length % CATEGORY_PALETTE.length;
+    for (let i = 0; i < CATEGORY_PALETTE.length; i++) { if (!usedColors.includes(i)) { colorIndex = i; break; } }
+    const id = 'cat_' + Date.now().toString(36) + Math.random().toString(36).slice(2, 6) + working.length;
+    working.push({ id, label: rawLabel.trim(), colorIndex });
+    if (type === 'income') incomeChanged = true; else expenseChanged = true;
+    return id;
+  }
+
+  const toImport = [];
+  let skipped = 0;
+  importRows.forEach(row => {
+    const dateVal = parseImportDate(row[map.date]);
+    const amtRaw = parseImportAmount(row[map.amount]);
+    if (!dateVal || amtRaw === null || amtRaw === 0) { skipped++; return; }
+    let type;
+    if (map.type) {
+      const rawType = String(row[map.type] || '').toLowerCase();
+      if (IMPORT_EXPENSE_KEYWORDS.some(k => rawType.includes(k))) type = 'expense';
+      else if (IMPORT_INCOME_KEYWORDS.some(k => rawType.includes(k))) type = 'income';
+      else type = amtRaw < 0 ? 'expense' : 'income';
+    } else {
+      type = amtRaw < 0 ? 'expense' : 'income';
+    }
+    const amount = Math.round(Math.abs(amtRaw) * 100) / 100;
+    const rawCat = map.category ? String(row[map.category] || '').trim() : '';
+    const category = resolveCategoryId(type, rawCat);
+    const note = map.note ? String(row[map.note] || '').trim() : '';
+    toImport.push({ type, amount, category, note, date: dateVal, createdAt: firebase.firestore.FieldValue.serverTimestamp() });
+  });
+
+  try {
+    if (expenseChanged) await saveCategoriesList('expense', workingExpense);
+    if (incomeChanged) await saveCategoriesList('income', workingIncome);
+    const uid = auth.currentUser.uid;
+    const colRef = db.collection('users').doc(uid).collection('transactions');
+    const chunkSize = 400;
+    for (let i = 0; i < toImport.length; i += chunkSize) {
+      const batch = db.batch();
+      toImport.slice(i, i + chunkSize).forEach(tx => batch.set(colRef.doc(), tx));
+      await batch.commit();
+    }
+    document.getElementById('importResultText').textContent =
+      t('importSummary', { imported: toImport.length, total: importRows.length }) +
+      (skipped ? '\n' + t('importSkippedNote', { skipped }) : '');
+    document.getElementById('importStepMap').style.display = 'none';
+    document.getElementById('importStepResult').style.display = 'block';
+  } catch (e) {
+    errEl.textContent = t('importWriteError');
+    errEl.style.display = 'block';
+  } finally {
+    btn.disabled = false;
+    btn.textContent = t('importRunBtn');
+  }
 }
 
 function setLang(lang) {
@@ -1014,6 +1282,12 @@ document.getElementById('addExpenseCatBtn').addEventListener('click', () => addC
 document.getElementById('addIncomeCatBtn').addEventListener('click', () => addCategoryFromInput('income'));
 document.getElementById('newExpenseCatInput').addEventListener('keydown', (e) => { if (e.key === 'Enter') addCategoryFromInput('expense'); });
 document.getElementById('newIncomeCatInput').addEventListener('keydown', (e) => { if (e.key === 'Enter') addCategoryFromInput('income'); });
+document.getElementById('openImportBtn').addEventListener('click', () => { document.getElementById('settingsOverlay').classList.remove('show'); openImportModal(); });
+document.getElementById('closeImport').addEventListener('click', () => document.getElementById('importOverlay').classList.remove('show'));
+document.getElementById('importOverlay').addEventListener('click', (e) => { if (e.target.id === 'importOverlay') e.currentTarget.classList.remove('show'); });
+document.getElementById('chooseImportFileBtn').addEventListener('click', () => document.getElementById('importFileInput').click());
+document.getElementById('runImportBtn').addEventListener('click', runImport);
+document.getElementById('doneImportBtn').addEventListener('click', () => document.getElementById('importOverlay').classList.remove('show'));
 document.getElementById('closePage').addEventListener('click', () => document.getElementById('pageOverlay').classList.remove('show'));
 document.getElementById('pageOverlay').addEventListener('click', (e) => { if (e.target.id === 'pageOverlay') e.currentTarget.classList.remove('show'); });
 document.getElementById('savePageBtn').addEventListener('click', savePage);

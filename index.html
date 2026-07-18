@@ -14,6 +14,7 @@
 <link rel="icon" href="icon-192.png">
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
 <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.0/chart.umd.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
 <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-app-compat.js"></script>
 <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-auth-compat.js"></script>
 <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore-compat.js"></script>
@@ -174,6 +175,16 @@
   .cat-add-row input:focus{border-color:var(--accent);}
   .cat-add-row button{border:none;border-radius:8px;background:var(--accent-light);color:var(--accent);
     cursor:pointer;padding:0 12px;display:flex;align-items:center;justify-content:center;flex-shrink:0;}
+  .import-hint{font-size:12.5px;color:var(--ink-muted);line-height:1.5;margin-bottom:16px;}
+  .import-map-row{margin-bottom:12px;}
+  .import-map-row select{width:100%;font-family:'Inter',sans-serif;font-size:14px;border:1px solid var(--border);
+    border-radius:8px;padding:9px 10px;margin-top:6px;outline:none;color:var(--ink);background:var(--bg);}
+  .import-map-row select:focus{border-color:var(--accent);}
+  .import-preview{margin:4px 0 14px;overflow-x:auto;border:1px solid var(--border);border-radius:8px;max-height:160px;}
+  .import-preview table{border-collapse:collapse;width:100%;font-size:11.5px;}
+  .import-preview th,.import-preview td{padding:6px 9px;border-bottom:1px solid var(--border);white-space:nowrap;text-align:left;color:var(--ink-soft);}
+  .import-preview th{background:var(--bg);color:var(--ink-muted);font-weight:600;font-size:10.5px;text-transform:uppercase;letter-spacing:.03em;position:sticky;top:0;}
+  .import-result{font-size:14px;color:var(--ink-soft);line-height:1.65;margin-bottom:18px;white-space:pre-line;}
 
   /* ---- Desktop layout ---- */
   .sidebar-brand{display:none;}
@@ -383,6 +394,38 @@
       <button type="button" id="addIncomeCatBtn" aria-label="Додати категорію">
         <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M12 5v14M5 12h14"/></svg>
       </button>
+    </div>
+
+    <label class="field-label" id="importSectionLabel" style="margin-top:14px;">Імпорт даних</label>
+    <button type="button" id="openImportBtn" class="submit-btn" style="margin-top:6px;background:var(--accent-light);color:var(--accent);">Імпортувати з Excel/CSV</button>
+  </div>
+</div>
+
+<div class="modal-overlay" id="importOverlay">
+  <div class="modal" style="max-width:540px;">
+    <div class="modal-head">
+      <div class="modal-title" id="importModalTitle">Імпорт записів</div>
+      <button class="close-btn" id="closeImport"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 6L6 18M6 6l12 12"/></svg></button>
+    </div>
+
+    <div id="importStepFile">
+      <div class="import-hint" id="importHint">Завантаж файл Excel (.xlsx, .xls) або CSV зі своїми витратами й доходами. На наступному кроці зіставиш стовпці файлу з полями застосунку.</div>
+      <input type="file" id="importFileInput" accept=".csv,.xlsx,.xls" style="display:none;">
+      <button type="button" class="submit-btn" id="chooseImportFileBtn">Обрати файл</button>
+      <div class="form-error" id="importFileError" style="display:none;"></div>
+    </div>
+
+    <div id="importStepMap" style="display:none;">
+      <div id="importMapList"></div>
+      <div class="import-hint" id="importTypeNote">Якщо стовпця "Тип" немає — визначимо автоматично: від'ємна сума = витрата, додатна = дохід.</div>
+      <div class="import-preview" id="importPreview"></div>
+      <div class="form-error" id="importMapError" style="display:none;"></div>
+      <button type="button" class="submit-btn" id="runImportBtn">Імпортувати</button>
+    </div>
+
+    <div id="importStepResult" style="display:none;">
+      <div class="import-result" id="importResultText"></div>
+      <button type="button" class="submit-btn" id="doneImportBtn">Готово</button>
     </div>
   </div>
 </div>
