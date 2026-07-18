@@ -959,6 +959,7 @@ function selectTab(tabKey) {
   currentTab = tabKey;
   document.querySelectorAll('#tabsList .tab-btn[data-tab]').forEach(b => b.classList.toggle('active', b.dataset.tab === tabKey));
   const isPage = tabKey.startsWith('page:');
+  document.getElementById('balanceSummary').style.display = tabKey === 'entries' ? 'block' : 'none';
   document.getElementById('entriesTab').style.display = tabKey === 'entries' ? 'block' : 'none';
   document.getElementById('statsTab').style.display = tabKey === 'stats' ? 'block' : 'none';
   document.getElementById('pageViewTab').style.display = isPage ? 'block' : 'none';
