@@ -1010,5 +1010,39 @@ document.getElementById('deletePageBtn').addEventListener('click', () => {
   document.getElementById('confirmOverlay').classList.add('show');
 });
 
+// ---- Повноекранний режим (тільки ПК, встановлений як застосунок) ----
+const isDesktopPointer = window.matchMedia('(pointer: fine) and (hover: hover)').matches;
+const isStandaloneApp = window.matchMedia('(display-mode: standalone)').matches || window.navigator.standalone === true;
+
+function updateFullscreenBtnVisibility() {
+  const btn = document.getElementById('fullscreenBtn');
+  if (isDesktopPointer && document.fullscreenEnabled) {
+    btn.style.display = 'flex';
+  } else {
+    btn.style.display = 'none';
+  }
+}
+updateFullscreenBtnVisibility();
+
+document.getElementById('fullscreenBtn').addEventListener('click', () => {
+  if (document.fullscreenElement) {
+    document.exitFullscreen().catch(() => {});
+  } else {
+    document.documentElement.requestFullscreen().catch(() => {});
+  }
+});
+
+if (isDesktopPointer && isStandaloneApp && document.fullscreenEnabled) {
+  const autoFullscreenOnce = () => {
+    if (!document.fullscreenElement) {
+      document.documentElement.requestFullscreen().catch(() => {});
+    }
+    document.removeEventListener('click', autoFullscreenOnce);
+    document.removeEventListener('keydown', autoFullscreenOnce);
+  };
+  document.addEventListener('click', autoFullscreenOnce, { once: true });
+  document.addEventListener('keydown', autoFullscreenOnce, { once: true });
+}
+
 // ---- Старт ----
 applyStaticTranslations();
