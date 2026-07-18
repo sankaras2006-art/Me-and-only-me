@@ -303,6 +303,7 @@ function applyStaticTranslations() {
   document.getElementById('tabEntries').textContent = t('tabEntries');
   document.getElementById('tabStats').textContent = t('tabStats');
   document.getElementById('tabPages').textContent = t('tabPages');
+  document.getElementById('sidebarBrandLabel').textContent = t('appTitle');
   document.getElementById('fabNewPageLabel').textContent = t('newPageBtn');
   document.getElementById('pageTitleLabel').textContent = t('pageTitleLabel');
   document.getElementById('pageContentLabel').textContent = t('pageContentLabel');
