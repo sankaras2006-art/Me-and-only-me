@@ -28,8 +28,16 @@ const T = {
     err_resetFailed: 'Не вдалося надіслати лист. Перевір email і спробуй ще раз',
     balanceLabel: 'Загальний баланс', logout: 'Вийти',
     incomeMonthLabel: 'Дохід за місяць', expenseMonthLabel: 'Витрати за місяць',
-    tabEntries: 'Записи', tabStats: 'Статистика',
+    tabEntries: 'Записи', tabStats: 'Статистика', tabPages: 'Сторінки',
     prevMonthAria: 'Попередній місяць', nextMonthAria: 'Наступний місяць',
+    newPageBtn: 'Нова сторінка', pageTitleLabel: 'Назва', pageContentLabel: 'Текст',
+    pageTitlePlaceholder: 'Напр. Ідеї на відпустку', pageContentPlaceholder: 'Пиши тут що завгодно…',
+    editPageTitle: 'Редагувати сторінку', newPageTitle: 'Нова сторінка',
+    savePageBtn: 'Зберегти', deletePageBtn: 'Видалити',
+    pageEmptyTitle: 'Ще немає сторінок', pageEmptySub: 'Створи першу кнопкою внизу',
+    pageError: 'Введи назву сторінки', pageSaveError: 'Не вдалося зберегти. Перевір інтернет-з’єднання',
+    confirmTitlePage: 'Видалити сторінку?',
+    pageNoTitle: 'Без назви',
     emptyTitle: 'Тут поки порожньо', emptySub: 'Додай перший запис кнопкою внизу',
     deleteAria: 'Видалити запис',
     statsCatTitle: 'Витрати за категоріями', statsNoExpenses: 'Немає витрат цього місяця',
@@ -64,8 +72,16 @@ const T = {
     err_resetFailed: 'Не удалось отправить письмо. Проверь email и попробуй ещё раз',
     balanceLabel: 'Общий баланс', logout: 'Выйти',
     incomeMonthLabel: 'Доход за месяц', expenseMonthLabel: 'Расходы за месяц',
-    tabEntries: 'Записи', tabStats: 'Статистика',
+    tabEntries: 'Записи', tabStats: 'Статистика', tabPages: 'Страницы',
     prevMonthAria: 'Предыдущий месяц', nextMonthAria: 'Следующий месяц',
+    newPageBtn: 'Новая страница', pageTitleLabel: 'Название', pageContentLabel: 'Текст',
+    pageTitlePlaceholder: 'Напр. Идеи на отпуск', pageContentPlaceholder: 'Пиши здесь что угодно…',
+    editPageTitle: 'Редактировать страницу', newPageTitle: 'Новая страница',
+    savePageBtn: 'Сохранить', deletePageBtn: 'Удалить',
+    pageEmptyTitle: 'Пока нет страниц', pageEmptySub: 'Создай первую кнопкой внизу',
+    pageError: 'Введи название страницы', pageSaveError: 'Не удалось сохранить. Проверь интернет-соединение',
+    confirmTitlePage: 'Удалить страницу?',
+    pageNoTitle: 'Без названия',
     emptyTitle: 'Здесь пока пусто', emptySub: 'Добавь первую запись кнопкой внизу',
     deleteAria: 'Удалить запись',
     statsCatTitle: 'Расходы по категориям', statsNoExpenses: 'Нет расходов в этом месяце',
@@ -100,8 +116,16 @@ const T = {
     err_resetFailed: 'Nie udało się wysłać emaila. Sprawdź adres i spróbuj ponownie',
     balanceLabel: 'Saldo ogólne', logout: 'Wyloguj',
     incomeMonthLabel: 'Przychód w tym miesiącu', expenseMonthLabel: 'Wydatki w tym miesiącu',
-    tabEntries: 'Wpisy', tabStats: 'Statystyki',
+    tabEntries: 'Wpisy', tabStats: 'Statystyki', tabPages: 'Strony',
     prevMonthAria: 'Poprzedni miesiąc', nextMonthAria: 'Następny miesiąc',
+    newPageBtn: 'Nowa strona', pageTitleLabel: 'Tytuł', pageContentLabel: 'Treść',
+    pageTitlePlaceholder: 'Np. Pomysły na wakacje', pageContentPlaceholder: 'Napisz tu cokolwiek…',
+    editPageTitle: 'Edytuj stronę', newPageTitle: 'Nowa strona',
+    savePageBtn: 'Zapisz', deletePageBtn: 'Usuń',
+    pageEmptyTitle: 'Jeszcze brak stron', pageEmptySub: 'Utwórz pierwszą przyciskiem poniżej',
+    pageError: 'Wpisz tytuł strony', pageSaveError: 'Nie udało się zapisać. Sprawdź połączenie z internetem',
+    confirmTitlePage: 'Usunąć stronę?',
+    pageNoTitle: 'Bez tytułu',
     emptyTitle: 'Tu jeszcze pusto', emptySub: 'Dodaj pierwszy wpis przyciskiem poniżej',
     deleteAria: 'Usuń wpis',
     statsCatTitle: 'Wydatki wg kategorii', statsNoExpenses: 'Brak wydatków w tym miesiącu',
@@ -136,8 +160,16 @@ const T = {
     err_resetFailed: 'Could not send the email. Check the address and try again',
     balanceLabel: 'Total balance', logout: 'Log out',
     incomeMonthLabel: 'Income this month', expenseMonthLabel: 'Expenses this month',
-    tabEntries: 'Entries', tabStats: 'Stats',
+    tabEntries: 'Entries', tabStats: 'Stats', tabPages: 'Pages',
     prevMonthAria: 'Previous month', nextMonthAria: 'Next month',
+    newPageBtn: 'New page', pageTitleLabel: 'Title', pageContentLabel: 'Content',
+    pageTitlePlaceholder: 'E.g. Vacation ideas', pageContentPlaceholder: 'Write anything here…',
+    editPageTitle: 'Edit page', newPageTitle: 'New page',
+    savePageBtn: 'Save', deletePageBtn: 'Delete',
+    pageEmptyTitle: 'No pages yet', pageEmptySub: 'Create your first one with the button below',
+    pageError: 'Enter a page title', pageSaveError: 'Could not save. Check your internet connection',
+    confirmTitlePage: 'Delete page?',
+    pageNoTitle: 'Untitled',
     emptyTitle: 'Nothing here yet', emptySub: 'Add your first entry using the button below',
     deleteAria: 'Delete entry',
     statsCatTitle: 'Expenses by category', statsNoExpenses: 'No expenses this month',
@@ -226,6 +258,10 @@ let currentTab = 'entries';
 let formType = 'expense';
 let selectedCategory = EXPENSE_CATEGORY_IDS[0];
 let pendingDeleteId = null;
+let pendingDeleteType = 'entry'; // 'entry' | 'page'
+let pages = [];
+let unsubscribePages = null;
+let currentPageId = null; // page being edited, null = new page
 let pieChart = null, barChart = null;
 let unsubscribeSnapshot = null;
 let unsubscribeProfile = null;
@@ -266,6 +302,14 @@ function applyStaticTranslations() {
   document.getElementById('expenseLabel').textContent = t('expenseMonthLabel');
   document.getElementById('tabEntries').textContent = t('tabEntries');
   document.getElementById('tabStats').textContent = t('tabStats');
+  document.getElementById('tabPages').textContent = t('tabPages');
+  document.getElementById('fabNewPageLabel').textContent = t('newPageBtn');
+  document.getElementById('pageTitleLabel').textContent = t('pageTitleLabel');
+  document.getElementById('pageContentLabel').textContent = t('pageContentLabel');
+  document.getElementById('pageTitleInput').placeholder = t('pageTitlePlaceholder');
+  document.getElementById('pageContentInput').placeholder = t('pageContentPlaceholder');
+  document.getElementById('savePageBtn').textContent = t('savePageBtn');
+  document.getElementById('deletePageBtn').textContent = t('deletePageBtn');
   document.getElementById('prevMonth').setAttribute('aria-label', t('prevMonthAria'));
   document.getElementById('nextMonth').setAttribute('aria-label', t('nextMonthAria'));
   document.getElementById('statsCatTitle').textContent = t('statsCatTitle');
@@ -436,10 +480,13 @@ auth.onAuthStateChanged((user) => {
     document.getElementById('appScreen').style.display = 'block';
     subscribeToTransactions(user.uid);
     subscribeToProfile(user.uid);
+    subscribeToPages(user.uid);
   } else {
     if (unsubscribeSnapshot) { unsubscribeSnapshot(); unsubscribeSnapshot = null; }
     if (unsubscribeProfile) { unsubscribeProfile(); unsubscribeProfile = null; }
+    if (unsubscribePages) { unsubscribePages(); unsubscribePages = null; }
     transactions = [];
+    pages = [];
     document.getElementById('appScreen').style.display = 'none';
     document.getElementById('authScreen').style.display = 'flex';
     document.getElementById('authEmail').value = '';
@@ -514,6 +561,7 @@ function render() {
 
   renderEntries(monthTx);
   if (currentTab === 'stats') renderStats(monthTx, ty, tm);
+  if (currentTab === 'pages') renderPages();
 }
 
 function catDisplay(rawCat) {
@@ -551,8 +599,100 @@ function renderEntries(monthTx) {
   container.querySelectorAll('.del-btn').forEach(btn => {
     btn.addEventListener('click', () => {
       pendingDeleteId = btn.dataset.id;
+      pendingDeleteType = 'entry';
+      document.getElementById('confirmTitle').textContent = t('confirmTitle');
       document.getElementById('confirmOverlay').classList.add('show');
     });
+  });
+}
+
+function pageSnippet(text) {
+  const clean = (text || '').replace(/\s+/g, ' ').trim();
+  return clean.length > 90 ? clean.slice(0, 90) + '…' : clean;
+}
+
+function formatPageDate(ts) {
+  if (!ts || !ts.toDate) return '';
+  const d = ts.toDate();
+  const genMonths = MONTHS_GEN[currentLang] || MONTHS_GEN.uk;
+  return `${d.getDate()} ${genMonths[d.getMonth()]} ${d.getFullYear()}`;
+}
+
+function renderPages() {
+  const container = document.getElementById('pagesTab');
+  if (pages.length === 0) {
+    container.innerHTML = `<div class="empty"><div class="title">${t('pageEmptyTitle')}</div><div>${t('pageEmptySub')}</div></div>`;
+    return;
+  }
+  const sorted = [...pages].sort((a, b) => {
+    const ta = a.updatedAt && a.updatedAt.toMillis ? a.updatedAt.toMillis() : 0;
+    const tb = b.updatedAt && b.updatedAt.toMillis ? b.updatedAt.toMillis() : 0;
+    return tb - ta;
+  });
+  container.innerHTML = sorted.map(p => `
+    <div class="page-card" data-id="${p.id}">
+      <div class="page-card-title">${escapeHtml(p.title || t('pageNoTitle'))}</div>
+      ${p.content ? `<div class="page-card-preview">${escapeHtml(pageSnippet(p.content))}</div>` : ''}
+      <div class="page-card-date">${formatPageDate(p.updatedAt)}</div>
+    </div>`).join('');
+  container.querySelectorAll('.page-card').forEach(card => {
+    card.addEventListener('click', () => openPageEditor(card.dataset.id));
+  });
+}
+
+function openPageEditor(id) {
+  currentPageId = id || null;
+  const page = id ? pages.find(p => p.id === id) : null;
+  document.getElementById('pageModalTitle').textContent = page ? t('editPageTitle') : t('newPageTitle');
+  document.getElementById('pageTitleInput').value = page ? (page.title || '') : '';
+  document.getElementById('pageContentInput').value = page ? (page.content || '') : '';
+  document.getElementById('pageError').style.display = 'none';
+  document.getElementById('deletePageBtn').style.display = page ? 'block' : 'none';
+  document.getElementById('pageOverlay').classList.add('show');
+}
+
+async function savePage() {
+  const title = document.getElementById('pageTitleInput').value.trim();
+  const content = document.getElementById('pageContentInput').value;
+  const errEl = document.getElementById('pageError');
+  errEl.style.display = 'none';
+  if (!title) {
+    errEl.textContent = t('pageError');
+    errEl.style.display = 'block';
+    return;
+  }
+  const btn = document.getElementById('savePageBtn');
+  btn.disabled = true;
+  const uid = auth.currentUser.uid;
+  try {
+    const now = firebase.firestore.FieldValue.serverTimestamp();
+    if (currentPageId) {
+      await db.collection('users').doc(uid).collection('pages').doc(currentPageId).update({ title, content, updatedAt: now });
+    } else {
+      await db.collection('users').doc(uid).collection('pages').add({ title, content, createdAt: now, updatedAt: now });
+    }
+    document.getElementById('pageOverlay').classList.remove('show');
+  } catch (e) {
+    errEl.textContent = t('pageSaveError');
+    errEl.style.display = 'block';
+  } finally {
+    btn.disabled = false;
+  }
+}
+
+function deletePageRemote(id) {
+  const uid = auth.currentUser.uid;
+  return db.collection('users').doc(uid).collection('pages').doc(id).delete();
+}
+
+function subscribeToPages(uid) {
+  if (unsubscribePages) unsubscribePages();
+  const col = db.collection('users').doc(uid).collection('pages');
+  unsubscribePages = col.onSnapshot((snapshot) => {
+    pages = snapshot.docs.map(d => ({ id: d.id, ...d.data() }));
+    if (currentTab === 'pages') renderPages();
+  }, (err) => {
+    console.error('Pages sync error', err);
   });
 }
 
@@ -692,6 +832,10 @@ document.querySelectorAll('.tab-btn').forEach(btn => {
     currentTab = btn.dataset.tab;
     document.getElementById('entriesTab').style.display = currentTab === 'entries' ? 'block' : 'none';
     document.getElementById('statsTab').style.display = currentTab === 'stats' ? 'block' : 'none';
+    document.getElementById('pagesTab').style.display = currentTab === 'pages' ? 'block' : 'none';
+    document.getElementById('monthNav').style.display = currentTab === 'pages' ? 'none' : 'flex';
+    document.getElementById('fabRow').style.display = currentTab === 'pages' ? 'none' : 'flex';
+    document.getElementById('fabRowPages').style.display = currentTab === 'pages' ? 'flex' : 'none';
     render();
   });
 });
@@ -706,13 +850,32 @@ document.getElementById('cancelDelete').addEventListener('click', () => { pendin
 document.getElementById('confirmOverlay').addEventListener('click', (e) => { if (e.target.id === 'confirmOverlay') e.currentTarget.classList.remove('show'); });
 document.getElementById('confirmDelete').addEventListener('click', async () => {
   const id = pendingDeleteId;
+  const type = pendingDeleteType;
   pendingDeleteId = null;
   document.getElementById('confirmOverlay').classList.remove('show');
-  try { await deleteTransactionRemote(id); } catch (e) { console.error(e); }
+  try {
+    if (type === 'page') {
+      await deletePageRemote(id);
+      document.getElementById('pageOverlay').classList.remove('show');
+    } else {
+      await deleteTransactionRemote(id);
+    }
+  } catch (e) { console.error(e); }
 });
 document.getElementById('settingsBtn').addEventListener('click', () => document.getElementById('settingsOverlay').classList.add('show'));
 document.getElementById('closeSettings').addEventListener('click', () => document.getElementById('settingsOverlay').classList.remove('show'));
 document.getElementById('settingsOverlay').addEventListener('click', (e) => { if (e.target.id === 'settingsOverlay') e.currentTarget.classList.remove('show'); });
+document.getElementById('openNewPage').addEventListener('click', () => openPageEditor(null));
+document.getElementById('closePage').addEventListener('click', () => document.getElementById('pageOverlay').classList.remove('show'));
+document.getElementById('pageOverlay').addEventListener('click', (e) => { if (e.target.id === 'pageOverlay') e.currentTarget.classList.remove('show'); });
+document.getElementById('savePageBtn').addEventListener('click', savePage);
+document.getElementById('deletePageBtn').addEventListener('click', () => {
+  if (!currentPageId) return;
+  pendingDeleteId = currentPageId;
+  pendingDeleteType = 'page';
+  document.getElementById('confirmTitle').textContent = t('confirmTitlePage');
+  document.getElementById('confirmOverlay').classList.add('show');
+});
 
 // ---- Старт ----
 applyStaticTranslations();
