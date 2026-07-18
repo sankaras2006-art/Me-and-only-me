@@ -322,7 +322,6 @@ function applyStaticTranslations() {
   document.getElementById('catLabel').textContent = t('catLabel');
   document.getElementById('dateLabel').textContent = t('dateLabel');
   document.getElementById('noteLabel').textContent = t('noteLabel');
-  document.getElementById('noteInput').setAttribute('placeholder', t('notePlaceholder'));
   document.getElementById('confirmTitle').textContent = t('confirmTitle');
   document.getElementById('confirmSub').textContent = t('confirmSub');
   document.getElementById('cancelDelete').textContent = t('cancelBtn');
