@@ -52,6 +52,10 @@ const T = {
     confirmTitle: 'Видалити запис?', confirmSub: 'Цю дію не можна скасувати.',
     cancelBtn: 'Скасувати', deleteBtn: 'Видалити',
     settingsTitle: 'Налаштування', langLabel: 'Мова', currencyLabel: 'Валюта',
+    expenseCatManageLabel: 'Категорії витрат', incomeCatManageLabel: 'Категорії доходів',
+    newCatPlaceholder: 'Нова категорія', addCatAria: 'Додати категорію', deleteCatAria: 'Видалити категорію',
+    catLastError: 'Має залишитися хоча б одна категорія',
+    catInUseConfirm: 'Ця категорія використовується у {count} записах. Видалити її?',
   },
   ru: {
     appTitle: 'Мои финансы',
@@ -96,6 +100,10 @@ const T = {
     confirmTitle: 'Удалить запись?', confirmSub: 'Это действие нельзя отменить.',
     cancelBtn: 'Отмена', deleteBtn: 'Удалить',
     settingsTitle: 'Настройки', langLabel: 'Язык', currencyLabel: 'Валюта',
+    expenseCatManageLabel: 'Категории расходов', incomeCatManageLabel: 'Категории доходов',
+    newCatPlaceholder: 'Новая категория', addCatAria: 'Добавить категорию', deleteCatAria: 'Удалить категорию',
+    catLastError: 'Должна остаться хотя бы одна категория',
+    catInUseConfirm: 'Эта категория используется в {count} записях. Удалить её?',
   },
   pl: {
     appTitle: 'Moje finanse',
@@ -140,6 +148,10 @@ const T = {
     confirmTitle: 'Usunąć wpis?', confirmSub: 'Tej czynności nie można cofnąć.',
     cancelBtn: 'Anuluj', deleteBtn: 'Usuń',
     settingsTitle: 'Ustawienia', langLabel: 'Język', currencyLabel: 'Waluta',
+    expenseCatManageLabel: 'Kategorie wydatków', incomeCatManageLabel: 'Kategorie przychodów',
+    newCatPlaceholder: 'Nowa kategoria', addCatAria: 'Dodaj kategorię', deleteCatAria: 'Usuń kategorię',
+    catLastError: 'Musi zostać przynajmniej jedna kategoria',
+    catInUseConfirm: 'Ta kategoria jest używana w {count} wpisach. Usunąć ją?',
   },
   en: {
     appTitle: 'My Finances',
@@ -184,6 +196,10 @@ const T = {
     confirmTitle: 'Delete entry?', confirmSub: 'This action cannot be undone.',
     cancelBtn: 'Cancel', deleteBtn: 'Delete',
     settingsTitle: 'Settings', langLabel: 'Language', currencyLabel: 'Currency',
+    expenseCatManageLabel: 'Expense categories', incomeCatManageLabel: 'Income categories',
+    newCatPlaceholder: 'New category', addCatAria: 'Add category', deleteCatAria: 'Delete category',
+    catLastError: 'At least one category must remain',
+    catInUseConfirm: 'This category is used in {count} entries. Delete it anyway?',
   },
 };
 
@@ -193,7 +209,7 @@ function t(key, vars) {
   return s;
 }
 
-// ---- Категорії (зберігаються як ID, перекладаються для показу) ----
+// ---- Категорії (базові набори + користувацькі, зберігаються в профілі користувача) ----
 const EXPENSE_CATEGORY_IDS = ['food', 'transport', 'housing', 'fun', 'health', 'clothes', 'other'];
 const INCOME_CATEGORY_IDS = ['salary', 'freelance', 'gift', 'other'];
 const CAT_LABELS = {
@@ -202,9 +218,6 @@ const CAT_LABELS = {
   pl: { food: 'Jedzenie', transport: 'Transport', housing: 'Mieszkanie', fun: 'Rozrywka', health: 'Zdrowie', clothes: 'Ubrania', other: 'Inne', salary: 'Wypłata', freelance: 'Freelance', gift: 'Prezent' },
   en: { food: 'Food', transport: 'Transport', housing: 'Housing', fun: 'Fun', health: 'Health', clothes: 'Clothes', other: 'Other', salary: 'Salary', freelance: 'Freelance', gift: 'Gift' },
 };
-function catLabel(id) {
-  return (CAT_LABELS[currentLang] && CAT_LABELS[currentLang][id]) || id;
-}
 
 const CATEGORY_PALETTE = [
   { text: '#3E7C59', bg: '#EAF5EF' },
@@ -216,12 +229,29 @@ const CATEGORY_PALETTE = [
   { text: '#8A6A45', bg: '#F6F0E9' },
   { text: '#5B7A9D', bg: '#EAF0F5' },
 ];
-function catPair(id) {
+
+function defaultCategories(type) {
+  const ids = type === 'income' ? INCOME_CATEGORY_IDS : EXPENSE_CATEGORY_IDS;
+  return ids.map((id, i) => ({ id, label: (CAT_LABELS[currentLang] && CAT_LABELS[currentLang][id]) || id, colorIndex: i % CATEGORY_PALETTE.length }));
+}
+
+function findCategory(type, id) {
+  const list = type === 'income' ? categoriesIncome : categoriesExpense;
+  return list.find(c => c.id === id);
+}
+function catLabel(type, id) {
+  const c = findCategory(type, id);
+  return c ? c.label : id;
+}
+function catPair(type, id) {
+  const c = findCategory(type, id);
+  if (c && typeof c.colorIndex === 'number') return CATEGORY_PALETTE[c.colorIndex % CATEGORY_PALETTE.length];
   let h = 0;
   for (let i = 0; i < id.length; i++) h = (h * 31 + id.charCodeAt(i)) >>> 0;
   return CATEGORY_PALETTE[h % CATEGORY_PALETTE.length];
 }
-function catColor(id) { return catPair(id).text; }
+function catColor(type, id) { return catPair(type, id).text; }
+function catDisplay(type, id) { return catLabel(type, id); }
 
 // ---- Місяці ----
 const MONTHS_NOM = {
@@ -256,7 +286,10 @@ let transactions = [];
 let monthOffset = 0;
 let currentTab = 'entries';
 let formType = 'expense';
-let selectedCategory = EXPENSE_CATEGORY_IDS[0];
+let categoriesExpense = defaultCategories('expense');
+let categoriesIncome = defaultCategories('income');
+let usingDefaultCategories = { expense: true, income: true };
+let selectedCategory = categoriesExpense[0] ? categoriesExpense[0].id : null;
 let pendingDeleteId = null;
 let pendingDeleteType = 'entry'; // 'entry' | 'page'
 let pages = [];
@@ -329,10 +362,17 @@ function applyStaticTranslations() {
   document.getElementById('settingsTitle').textContent = t('settingsTitle');
   document.getElementById('settingsLangLabel').textContent = t('langLabel');
   document.getElementById('settingsCurrencyLabel').textContent = t('currencyLabel');
+  document.getElementById('expenseCatManageLabel').textContent = t('expenseCatManageLabel');
+  document.getElementById('incomeCatManageLabel').textContent = t('incomeCatManageLabel');
+  document.getElementById('newExpenseCatInput').placeholder = t('newCatPlaceholder');
+  document.getElementById('newIncomeCatInput').placeholder = t('newCatPlaceholder');
+  document.getElementById('addExpenseCatBtn').setAttribute('aria-label', t('addCatAria'));
+  document.getElementById('addIncomeCatBtn').setAttribute('aria-label', t('addCatAria'));
   const cur = CURRENCIES[currentCurrency] || CURRENCIES.UAH;
   document.getElementById('amountLabel').textContent = t('amountLabel', { symbol: cur.symbol });
   renderLangPicker();
   renderCurrencyPicker();
+  renderCategoryManager();
   renderAuthLangRow();
 }
 
@@ -362,10 +402,58 @@ function renderCurrencyPicker() {
   });
 }
 
+function renderCategoryManager() {
+  ['expense', 'income'].forEach(type => {
+    const list = type === 'income' ? categoriesIncome : categoriesExpense;
+    const container = document.getElementById(type === 'income' ? 'incomeCatManageList' : 'expenseCatManageList');
+    if (!container) return;
+    container.innerHTML = list.map(c => `
+      <div class="cat-manage-row">
+        <span class="cat-manage-dot" style="background:${CATEGORY_PALETTE[c.colorIndex % CATEGORY_PALETTE.length].text}"></span>
+        <input type="text" class="cat-manage-input" value="${escapeHtml(c.label)}" data-id="${c.id}" data-type="${type}">
+        <button type="button" class="cat-manage-del" data-id="${c.id}" data-type="${type}" aria-label="${t('deleteCatAria')}">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 6L6 18M6 6l12 12"/></svg>
+        </button>
+      </div>`).join('');
+    container.querySelectorAll('.cat-manage-input').forEach(input => {
+      const commit = () => {
+        const id = input.dataset.id, ty = input.dataset.type;
+        const src = ty === 'income' ? categoriesIncome : categoriesExpense;
+        const cat = src.find(c => c.id === id);
+        if (!cat) return;
+        const val = input.value.trim();
+        if (!val || val === cat.label) { input.value = cat.label; return; }
+        renameCategory(ty, id, val).catch(() => { input.value = cat.label; });
+      };
+      input.addEventListener('blur', commit);
+      input.addEventListener('keydown', (e) => { if (e.key === 'Enter') input.blur(); });
+    });
+    container.querySelectorAll('.cat-manage-del').forEach(btn => {
+      btn.addEventListener('click', async () => {
+        const id = btn.dataset.id, ty = btn.dataset.type;
+        const src = ty === 'income' ? categoriesIncome : categoriesExpense;
+        if (src.length <= 1) { alert(t('catLastError')); return; }
+        const used = transactions.filter(tx => tx.type === ty && tx.category === id).length;
+        if (used > 0 && !confirm(t('catInUseConfirm', { count: used }))) return;
+        try { await deleteCategory(ty, id); } catch (e) {}
+      });
+    });
+  });
+}
+
+function addCategoryFromInput(type) {
+  const input = document.getElementById(type === 'income' ? 'newIncomeCatInput' : 'newExpenseCatInput');
+  const label = input.value.trim();
+  if (!label) return;
+  addCategory(type, label).then(() => { input.value = ''; }).catch(() => {});
+}
+
 function setLang(lang) {
   if (!LANGS.includes(lang)) return;
   currentLang = lang;
   localStorage.setItem('financeAppLang', lang);
+  if (usingDefaultCategories.expense) categoriesExpense = defaultCategories('expense');
+  if (usingDefaultCategories.income) categoriesIncome = defaultCategories('income');
   if (auth.currentUser) {
     db.collection('users').doc(auth.currentUser.uid).set({ lang }, { merge: true }).catch(() => {});
   }
@@ -516,6 +604,22 @@ function subscribeToProfile(uid) {
     let changed = false;
     if (data.lang && LANGS.includes(data.lang) && data.lang !== currentLang) { currentLang = data.lang; localStorage.setItem('financeAppLang', currentLang); changed = true; }
     if (data.currency && CURRENCY_CODES.includes(data.currency) && data.currency !== currentCurrency) { currentCurrency = data.currency; localStorage.setItem('financeAppCurrency', currentCurrency); changed = true; }
+    if (Array.isArray(data.categoriesExpense) && data.categoriesExpense.length) {
+      categoriesExpense = data.categoriesExpense;
+      usingDefaultCategories.expense = false;
+      changed = true;
+    } else if (usingDefaultCategories.expense) {
+      categoriesExpense = defaultCategories('expense');
+    }
+    if (Array.isArray(data.categoriesIncome) && data.categoriesIncome.length) {
+      categoriesIncome = data.categoriesIncome;
+      usingDefaultCategories.income = false;
+      changed = true;
+    } else if (usingDefaultCategories.income) {
+      categoriesIncome = defaultCategories('income');
+    }
+    if (formType === 'expense' && !findCategory('expense', selectedCategory)) selectedCategory = categoriesExpense[0] ? categoriesExpense[0].id : null;
+    if (formType === 'income' && !findCategory('income', selectedCategory)) selectedCategory = categoriesIncome[0] ? categoriesIncome[0].id : null;
     if (changed) { applyStaticTranslations(); render(); }
   }, () => {});
 }
@@ -527,6 +631,36 @@ function addTransactionRemote(tx) {
 function deleteTransactionRemote(id) {
   const uid = auth.currentUser.uid;
   return db.collection('users').doc(uid).collection('transactions').doc(id).delete();
+}
+
+function saveCategoriesList(type, list) {
+  const uid = auth.currentUser.uid;
+  const field = type === 'income' ? 'categoriesIncome' : 'categoriesExpense';
+  return db.collection('users').doc(uid).set({ [field]: list }, { merge: true });
+}
+function addCategory(type, label) {
+  label = label.trim();
+  if (!label) return Promise.resolve();
+  const current = type === 'income' ? categoriesIncome : categoriesExpense;
+  const usedColors = current.map(c => c.colorIndex);
+  let colorIndex = current.length % CATEGORY_PALETTE.length;
+  for (let i = 0; i < CATEGORY_PALETTE.length; i++) { if (!usedColors.includes(i)) { colorIndex = i; break; } }
+  const id = 'cat_' + Date.now().toString(36) + Math.random().toString(36).slice(2, 6);
+  const list = [...current, { id, label, colorIndex }];
+  return saveCategoriesList(type, list);
+}
+function renameCategory(type, id, label) {
+  label = label.trim();
+  if (!label) return Promise.resolve();
+  const current = type === 'income' ? categoriesIncome : categoriesExpense;
+  const list = current.map(c => c.id === id ? { ...c, label } : c);
+  return saveCategoriesList(type, list);
+}
+function deleteCategory(type, id) {
+  const current = type === 'income' ? categoriesIncome : categoriesExpense;
+  if (current.length <= 1) return Promise.reject(new Error('last'));
+  const list = current.filter(c => c.id !== id);
+  return saveCategoriesList(type, list);
 }
 
 // ---- Обчислення на основі поточного місяця ----
@@ -564,12 +698,6 @@ function render() {
   if (currentTab === 'pages') renderPages();
 }
 
-function catDisplay(rawCat) {
-  // rawCat may be an id (new data) or legacy Ukrainian text (old data)
-  const label = catLabel(rawCat);
-  return label === rawCat && !(CAT_LABELS.uk[rawCat]) ? rawCat : label;
-}
-
 function renderEntries(monthTx) {
   const container = document.getElementById('entriesTab');
   if (monthTx.length === 0) {
@@ -586,7 +714,7 @@ function renderEntries(monthTx) {
     const dayLabel = `${dateObj.getDate()} ${genMonths[dateObj.getMonth()]}`;
     const items = groups[d].map(tx => `
       <div class="entry">
-        <span class="cat-tag" style="color:${catPair(tx.category).text};background:${catPair(tx.category).bg};">${escapeHtml(catDisplay(tx.category))}</span>
+        <span class="cat-tag" style="color:${catPair(tx.type, tx.category).text};background:${catPair(tx.type, tx.category).bg};">${escapeHtml(catDisplay(tx.type, tx.category))}</span>
         <div class="entry-note">${escapeHtml(tx.note || '')}</div>
         <div class="entry-amount ${tx.type === 'income' ? 'inc' : ''}">${tx.type === 'income' ? '+' : '\u2212'}${formatMoney(tx.amount).replace('\u2212', '')}</div>
         <button class="del-btn" data-id="${tx.id}" aria-label="${t('deleteAria')}">
@@ -711,9 +839,9 @@ function renderStats(monthTx, ty, tm) {
     pieEmpty.style.display = 'none';
     pieCanvas.style.display = 'block';
     const ids = entries.map(e => e[0]);
-    const labels = ids.map(catDisplay);
+    const labels = ids.map(id => catDisplay('expense', id));
     const values = entries.map(e => e[1]);
-    const colors = ids.map(catColor);
+    const colors = ids.map(id => catColor('expense', id));
     if (pieChart) pieChart.destroy();
     pieChart = new Chart(pieCanvas, {
       type: 'doughnut',
@@ -728,8 +856,8 @@ function renderStats(monthTx, ty, tm) {
     });
     document.getElementById('pieLegend').innerHTML = ids.map((id, i) => `
       <div class="legend-row">
-        <span class="legend-dot" style="background:${catColor(id)}"></span>
-        <span class="legend-name">${escapeHtml(catDisplay(id))}</span>
+        <span class="legend-dot" style="background:${catColor('expense', id)}"></span>
+        <span class="legend-name">${escapeHtml(catDisplay('expense', id))}</span>
         <span class="legend-val">${formatMoney(entries[i][1])}</span>
       </div>`).join('');
   }
@@ -766,7 +894,8 @@ function renderStats(monthTx, ty, tm) {
 // ---- Форма додавання ----
 function openForm(type) {
   formType = type;
-  selectedCategory = type === 'expense' ? EXPENSE_CATEGORY_IDS[0] : INCOME_CATEGORY_IDS[0];
+  const list = type === 'expense' ? categoriesExpense : categoriesIncome;
+  selectedCategory = list[0] ? list[0].id : null;
   document.getElementById('modalTitle').textContent = type === 'income' ? t('newIncomeTitle') : t('newExpenseTitle');
   document.getElementById('modalTitle').style.color = type === 'income' ? '#7FA88F' : '#C97B5A';
   document.getElementById('submitBtn').style.background = type === 'income' ? '#7FA88F' : '#C97B5A';
@@ -782,11 +911,11 @@ function openForm(type) {
 }
 
 function renderCatPicker() {
-  const cats = formType === 'expense' ? EXPENSE_CATEGORY_IDS : INCOME_CATEGORY_IDS;
+  const cats = formType === 'expense' ? categoriesExpense : categoriesIncome;
   const picker = document.getElementById('catPicker');
-  picker.innerHTML = cats.map(id => `<button type="button" class="cat-choice${id === selectedCategory ? ' selected' : ''}"
-    data-cat="${id}"
-    style="${id === selectedCategory ? `background:${catColor(id)};` : ''}">${escapeHtml(catLabel(id))}</button>`).join('');
+  picker.innerHTML = cats.map(c => `<button type="button" class="cat-choice${c.id === selectedCategory ? ' selected' : ''}"
+    data-cat="${c.id}"
+    style="${c.id === selectedCategory ? `background:${catColor(formType, c.id)};` : ''}">${escapeHtml(catLabel(formType, c.id))}</button>`).join('');
   picker.querySelectorAll('.cat-choice').forEach(btn => {
     btn.addEventListener('click', () => {
       selectedCategory = btn.dataset.cat;
@@ -865,6 +994,10 @@ document.getElementById('confirmDelete').addEventListener('click', async () => {
 document.getElementById('settingsBtn').addEventListener('click', () => document.getElementById('settingsOverlay').classList.add('show'));
 document.getElementById('closeSettings').addEventListener('click', () => document.getElementById('settingsOverlay').classList.remove('show'));
 document.getElementById('settingsOverlay').addEventListener('click', (e) => { if (e.target.id === 'settingsOverlay') e.currentTarget.classList.remove('show'); });
+document.getElementById('addExpenseCatBtn').addEventListener('click', () => addCategoryFromInput('expense'));
+document.getElementById('addIncomeCatBtn').addEventListener('click', () => addCategoryFromInput('income'));
+document.getElementById('newExpenseCatInput').addEventListener('keydown', (e) => { if (e.key === 'Enter') addCategoryFromInput('expense'); });
+document.getElementById('newIncomeCatInput').addEventListener('keydown', (e) => { if (e.key === 'Enter') addCategoryFromInput('income'); });
 document.getElementById('openNewPage').addEventListener('click', () => openPageEditor(null));
 document.getElementById('closePage').addEventListener('click', () => document.getElementById('pageOverlay').classList.remove('show'));
 document.getElementById('pageOverlay').addEventListener('click', (e) => { if (e.target.id === 'pageOverlay') e.currentTarget.classList.remove('show'); });

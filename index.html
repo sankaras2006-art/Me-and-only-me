@@ -150,6 +150,21 @@
   .page-modal-actions{display:flex;gap:8px;}
   .page-modal-actions .submit-btn{margin-top:0;flex:1;}
   .page-modal-actions .btn-delete{border-radius:10px;padding:13px 18px;font-weight:600;font-size:15px;}
+  .cat-manage-list{margin-top:8px;}
+  .cat-manage-row{display:flex;align-items:center;gap:9px;padding:7px 2px;}
+  .cat-manage-dot{width:10px;height:10px;border-radius:50%;flex-shrink:0;}
+  .cat-manage-input{flex:1;width:auto;font-family:'Inter',sans-serif;font-size:13.5px;border:1px solid transparent;
+    border-radius:7px;padding:6px 8px;margin:0;outline:none;color:var(--ink);background:transparent;}
+  .cat-manage-input:hover{background:var(--bg);}
+  .cat-manage-input:focus{border-color:var(--accent);background:var(--bg);}
+  .cat-manage-del{background:none;border:none;cursor:pointer;color:var(--ink-muted);padding:5px;display:flex;flex-shrink:0;}
+  .cat-manage-del:hover{color:var(--expense);}
+  .cat-add-row{display:flex;gap:8px;margin-top:6px;}
+  .cat-add-row input{width:auto;flex:1;font-family:'Inter',sans-serif;font-size:13.5px;border:1px solid var(--border);
+    border-radius:8px;padding:8px 11px;margin:0;outline:none;color:var(--ink);background:var(--bg);}
+  .cat-add-row input:focus{border-color:var(--accent);}
+  .cat-add-row button{border:none;border-radius:8px;background:var(--accent-light);color:var(--accent);
+    cursor:pointer;padding:0 12px;display:flex;align-items:center;justify-content:center;flex-shrink:0;}
 
   /* ---- Desktop layout ---- */
   .sidebar-brand{display:none;}
@@ -325,6 +340,24 @@
     <div class="cat-picker" id="langPicker"></div>
     <label class="field-label" id="settingsCurrencyLabel" style="margin-top:6px;">Валюта</label>
     <div class="cat-picker" id="currencyPicker"></div>
+
+    <label class="field-label" id="expenseCatManageLabel" style="margin-top:14px;">Категорії витрат</label>
+    <div class="cat-manage-list" id="expenseCatManageList"></div>
+    <div class="cat-add-row">
+      <input type="text" id="newExpenseCatInput" placeholder="Нова категорія">
+      <button type="button" id="addExpenseCatBtn" aria-label="Додати категорію">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M12 5v14M5 12h14"/></svg>
+      </button>
+    </div>
+
+    <label class="field-label" id="incomeCatManageLabel" style="margin-top:14px;">Категорії доходів</label>
+    <div class="cat-manage-list" id="incomeCatManageList"></div>
+    <div class="cat-add-row">
+      <input type="text" id="newIncomeCatInput" placeholder="Нова категорія">
+      <button type="button" id="addIncomeCatBtn" aria-label="Додати категорію">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M12 5v14M5 12h14"/></svg>
+      </button>
+    </div>
   </div>
 </div>
 
