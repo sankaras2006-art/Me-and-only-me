@@ -6,9 +6,9 @@
 <meta name="theme-color" content="#FAF8F4">
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-status-bar-style" content="default">
-<meta name="apple-mobile-web-app-title" content="Мої фінанси">
+<meta name="apple-mobile-web-app-title" content="My life">
 <meta name="mobile-web-app-capable" content="yes">
-<title>Мої фінанси</title>
+<title>My life</title>
 <link rel="manifest" href="manifest.json">
 <link rel="apple-touch-icon" href="icon-192.png">
 <link rel="icon" href="icon-192.png">
@@ -73,7 +73,10 @@
   .stat-value{font-family:'Inter',sans-serif;font-size:16px;font-weight:600;margin-top:3px;font-variant-numeric:tabular-nums;}
   .stat-value.inc{color:var(--income);}
   .stat-value.exp{color:var(--expense);}
-  .tabs{display:flex;gap:4px;background:#F1EDE5;border-radius:10px;padding:4px;margin:16px 20px 0;}
+  .tabs{display:flex;gap:4px;background:#F1EDE5;border-radius:10px;padding:4px;margin:16px 20px 0;
+    overflow-x:auto;-webkit-overflow-scrolling:touch;scrollbar-width:none;}
+  .tabs::-webkit-scrollbar{display:none;}
+  .tabs .tab-btn{flex:0 0 auto;white-space:nowrap;}
   .tab-btn{flex:1;padding:9px 0;border-radius:7px;border:none;cursor:pointer;font-size:14px;font-weight:500;
     font-family:'Inter',sans-serif;background:transparent;color:var(--ink-muted);}
   .tab-btn.active{background:var(--surface);color:var(--ink);box-shadow:0 1px 2px rgba(20,20,24,.06);}
@@ -139,10 +142,14 @@
   .btn-cancel{border:1px solid var(--border);background:transparent;color:var(--ink-soft);}
   .btn-delete{border:none;background:var(--expense);color:#fff;font-weight:500;}
   svg.icon{display:inline-block;vertical-align:middle;}
-  .page-card{background:var(--surface);border-radius:12px;border:1px solid var(--border);padding:14px 16px;margin-bottom:10px;cursor:pointer;}
-  .page-card-title{font-family:'Inter',sans-serif;font-size:15px;font-weight:600;color:var(--ink);margin-bottom:4px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;}
-  .page-card-preview{font-size:13px;color:var(--ink-muted);overflow:hidden;text-overflow:ellipsis;white-space:nowrap;margin-bottom:6px;}
-  .page-card-date{font-size:11px;color:var(--ink-muted);}
+  .page-view-card{padding:22px;}
+  .page-view-head{display:flex;align-items:flex-start;justify-content:space-between;gap:10px;margin-bottom:12px;}
+  .page-view-title{font-family:'Inter',sans-serif;font-size:19px;font-weight:700;color:var(--ink);word-break:break-word;}
+  .page-view-actions{display:flex;gap:12px;flex-shrink:0;padding-top:2px;}
+  .page-view-content{font-size:14.5px;line-height:1.65;color:var(--ink-soft);white-space:pre-wrap;word-break:break-word;}
+  .tab-btn.page-tab{display:flex;align-items:center;gap:8px;overflow:hidden;}
+  .tab-btn.page-tab .page-tab-label{overflow:hidden;text-overflow:ellipsis;white-space:nowrap;}
+  .tab-btn.tab-add{display:flex;align-items:center;gap:7px;color:var(--ink-muted);}
   #pageTitleInput{margin-bottom:14px;}
   #pageContentInput{width:100%;font-family:'Inter',sans-serif;font-size:14.5px;line-height:1.55;border:1px solid var(--border);
     border-radius:8px;padding:10px 12px;outline:none;color:var(--ink);background:var(--bg);resize:vertical;min-height:180px;margin-bottom:16px;}
@@ -179,7 +186,8 @@
     .month-nav{grid-area:monthnav;justify-content:flex-start;padding:20px 4px 0;}
     .content{grid-area:content;padding:14px 4px 40px;}
     .tabs{grid-area:tabs;flex-direction:column;background:transparent;padding:0;gap:4px;
-      margin:32px 0 0;position:sticky;top:28px;align-self:start;height:fit-content;}
+      margin:32px 0 0;position:sticky;top:28px;align-self:start;height:fit-content;
+      max-height:calc(100vh - 60px);overflow-y:auto;overflow-x:visible;}
     .sidebar-brand{display:flex;align-items:center;gap:8px;padding:4px 10px 18px;margin-bottom:8px;
       border-bottom:1px solid var(--border);font-family:'Inter',sans-serif;font-weight:700;font-size:15px;color:var(--ink);}
     .tab-btn{text-align:left;padding:11px 14px;border-radius:9px;}
@@ -187,8 +195,6 @@
 
     #statsTab{display:grid;grid-template-columns:1fr 1fr;gap:18px;align-items:start;}
     #statsTab .card{margin-bottom:0;}
-    #pagesTab{display:grid;grid-template-columns:repeat(auto-fill,minmax(240px,1fr));gap:12px;align-content:start;}
-    #pagesTab .empty{grid-column:1/-1;}
 
     .fab-row{left:auto;right:32px;bottom:32px;justify-content:flex-end;padding:0;}
 
@@ -258,14 +264,18 @@
     </div>
   </div>
 
-  <div class="tabs">
+  <div class="tabs" id="tabsList">
     <div class="sidebar-brand" id="sidebarBrand">
       <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#5B7A9D" stroke-width="2"><path d="M21 12V7H5a2 2 0 0 1 0-4h14v4"/><path d="M3 5v14a2 2 0 0 0 2 2h16v-5"/><path d="M18 12a2 2 0 0 0 0 4h4v-4Z"/></svg>
-      <span id="sidebarBrandLabel">Мої фінанси</span>
+      <span id="sidebarBrandLabel">My life</span>
     </div>
     <button class="tab-btn active" data-tab="entries" id="tabEntries">Записи</button>
     <button class="tab-btn" data-tab="stats" id="tabStats">Статистика</button>
-    <button class="tab-btn" data-tab="pages" id="tabPages">Сторінки</button>
+    <div id="pageTabsList"></div>
+    <button class="tab-btn tab-add" id="addPageTab" type="button">
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" style="flex-shrink:0;"><path d="M12 5v14M5 12h14"/></svg>
+      <span id="addPageTabLabel">Нова сторінка</span>
+    </button>
   </div>
 
   <div class="month-nav" id="monthNav">
@@ -290,17 +300,28 @@
         <div style="height:220px;"><canvas id="barChart"></canvas></div>
       </div>
     </div>
-    <div id="pagesTab" style="display:none;"></div>
+    <div id="pageViewTab" style="display:none;">
+      <div class="card page-view-card">
+        <div class="page-view-head">
+          <div class="page-view-title" id="pageViewTitle"></div>
+          <div class="page-view-actions">
+            <button class="logout-link" id="editPageBtn" aria-label="Редагувати">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 20h9"/><path d="M16.5 3.5a2.12 2.12 0 0 1 3 3L7 19l-4 1 1-4Z"/></svg>
+            </button>
+            <button class="logout-link" id="deletePageInlineBtn" aria-label="Видалити">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 6h18M8 6V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2m3 0v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6h14Z"/></svg>
+            </button>
+          </div>
+        </div>
+        <div class="page-view-content" id="pageViewContent"></div>
+      </div>
+    </div>
   </div>
 </div>
 
 <div class="fab-row" id="fabRow">
   <button class="fab exp" id="openExpense"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M12 5v14M5 12h14"/></svg> <span id="fabExpLabel">Витрата</span></button>
   <button class="fab inc" id="openIncome"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M12 5v14M5 12h14"/></svg> <span id="fabIncLabel">Дохід</span></button>
-</div>
-
-<div class="fab-row" id="fabRowPages" style="display:none;">
-  <button class="fab inc" id="openNewPage"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M12 5v14M5 12h14"/></svg> <span id="fabNewPageLabel">Нова сторінка</span></button>
 </div>
 
 <div class="modal-overlay" id="formOverlay">

@@ -10,7 +10,7 @@ const LOCALE_MAP = { uk: 'uk-UA', ru: 'ru-RU', pl: 'pl-PL', en: 'en-US' };
 
 const T = {
   uk: {
-    appTitle: 'Мої фінанси',
+    appTitle: 'My life',
     authTitleLogin: 'Вхід', authTitleSignup: 'Реєстрація',
     authSub: 'Увійди, щоб дані синхронізувались між твоїми пристроями.',
     emailLabel: 'Email', passwordLabel: 'Пароль',
@@ -58,7 +58,7 @@ const T = {
     catInUseConfirm: 'Ця категорія використовується у {count} записах. Видалити її?',
   },
   ru: {
-    appTitle: 'Мои финансы',
+    appTitle: 'My life',
     authTitleLogin: 'Вход', authTitleSignup: 'Регистрация',
     authSub: 'Войди, чтобы данные синхронизировались между твоими устройствами.',
     emailLabel: 'Email', passwordLabel: 'Пароль',
@@ -106,7 +106,7 @@ const T = {
     catInUseConfirm: 'Эта категория используется в {count} записях. Удалить её?',
   },
   pl: {
-    appTitle: 'Moje finanse',
+    appTitle: 'My life',
     authTitleLogin: 'Logowanie', authTitleSignup: 'Rejestracja',
     authSub: 'Zaloguj się, aby dane synchronizowały się między urządzeniami.',
     emailLabel: 'Email', passwordLabel: 'Hasło',
@@ -154,7 +154,7 @@ const T = {
     catInUseConfirm: 'Ta kategoria jest używana w {count} wpisach. Usunąć ją?',
   },
   en: {
-    appTitle: 'My Finances',
+    appTitle: 'My life',
     authTitleLogin: 'Log in', authTitleSignup: 'Sign up',
     authSub: 'Log in so your data syncs across your devices.',
     emailLabel: 'Email', passwordLabel: 'Password',
@@ -335,9 +335,8 @@ function applyStaticTranslations() {
   document.getElementById('expenseLabel').textContent = t('expenseMonthLabel');
   document.getElementById('tabEntries').textContent = t('tabEntries');
   document.getElementById('tabStats').textContent = t('tabStats');
-  document.getElementById('tabPages').textContent = t('tabPages');
+  document.getElementById('addPageTabLabel').textContent = t('newPageBtn');
   document.getElementById('sidebarBrandLabel').textContent = t('appTitle');
-  document.getElementById('fabNewPageLabel').textContent = t('newPageBtn');
   document.getElementById('pageTitleLabel').textContent = t('pageTitleLabel');
   document.getElementById('pageContentLabel').textContent = t('pageContentLabel');
   document.getElementById('pageTitleInput').placeholder = t('pageTitlePlaceholder');
@@ -695,7 +694,7 @@ function render() {
 
   renderEntries(monthTx);
   if (currentTab === 'stats') renderStats(monthTx, ty, tm);
-  if (currentTab === 'pages') renderPages();
+  if (currentTab.startsWith('page:')) renderPageView(currentTab.slice(5));
 }
 
 function renderEntries(monthTx) {
@@ -746,26 +745,27 @@ function formatPageDate(ts) {
   return `${d.getDate()} ${genMonths[d.getMonth()]} ${d.getFullYear()}`;
 }
 
-function renderPages() {
-  const container = document.getElementById('pagesTab');
-  if (pages.length === 0) {
-    container.innerHTML = `<div class="empty"><div class="title">${t('pageEmptyTitle')}</div><div>${t('pageEmptySub')}</div></div>`;
-    return;
-  }
+function renderPageTabs() {
+  const container = document.getElementById('pageTabsList');
   const sorted = [...pages].sort((a, b) => {
     const ta = a.updatedAt && a.updatedAt.toMillis ? a.updatedAt.toMillis() : 0;
     const tb = b.updatedAt && b.updatedAt.toMillis ? b.updatedAt.toMillis() : 0;
     return tb - ta;
   });
-  container.innerHTML = sorted.map(p => `
-    <div class="page-card" data-id="${p.id}">
-      <div class="page-card-title">${escapeHtml(p.title || t('pageNoTitle'))}</div>
-      ${p.content ? `<div class="page-card-preview">${escapeHtml(pageSnippet(p.content))}</div>` : ''}
-      <div class="page-card-date">${formatPageDate(p.updatedAt)}</div>
-    </div>`).join('');
-  container.querySelectorAll('.page-card').forEach(card => {
-    card.addEventListener('click', () => openPageEditor(card.dataset.id));
-  });
+  container.innerHTML = sorted.map(p => `<button type="button" class="tab-btn page-tab${currentTab === 'page:' + p.id ? ' active' : ''}" data-tab="page:${p.id}"><span class="page-tab-label">${escapeHtml(p.title || t('pageNoTitle'))}</span></button>`).join('');
+
+  if (currentTab.startsWith('page:') && !pages.find(p => 'page:' + p.id === currentTab)) {
+    selectTab('entries');
+  } else if (currentTab.startsWith('page:')) {
+    renderPageView(currentTab.slice(5));
+  }
+}
+
+function renderPageView(id) {
+  const page = pages.find(p => p.id === id);
+  if (!page) return;
+  document.getElementById('pageViewTitle').textContent = page.title || t('pageNoTitle');
+  document.getElementById('pageViewContent').textContent = page.content || '';
 }
 
 function openPageEditor(id) {
@@ -797,7 +797,8 @@ async function savePage() {
     if (currentPageId) {
       await db.collection('users').doc(uid).collection('pages').doc(currentPageId).update({ title, content, updatedAt: now });
     } else {
-      await db.collection('users').doc(uid).collection('pages').add({ title, content, createdAt: now, updatedAt: now });
+      const ref = await db.collection('users').doc(uid).collection('pages').add({ title, content, createdAt: now, updatedAt: now });
+      selectTab('page:' + ref.id);
     }
     document.getElementById('pageOverlay').classList.remove('show');
   } catch (e) {
@@ -818,7 +819,7 @@ function subscribeToPages(uid) {
   const col = db.collection('users').doc(uid).collection('pages');
   unsubscribePages = col.onSnapshot((snapshot) => {
     pages = snapshot.docs.map(d => ({ id: d.id, ...d.data() }));
-    if (currentTab === 'pages') renderPages();
+    renderPageTabs();
   }, (err) => {
     console.error('Pages sync error', err);
   });
@@ -954,19 +955,33 @@ async function submitForm() {
 }
 
 // ---- Події ----
-document.querySelectorAll('.tab-btn').forEach(btn => {
-  btn.addEventListener('click', () => {
-    document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
-    btn.classList.add('active');
-    currentTab = btn.dataset.tab;
-    document.getElementById('entriesTab').style.display = currentTab === 'entries' ? 'block' : 'none';
-    document.getElementById('statsTab').style.display = currentTab === 'stats' ? 'block' : 'none';
-    document.getElementById('pagesTab').style.display = currentTab === 'pages' ? 'block' : 'none';
-    document.getElementById('monthNav').style.display = currentTab === 'pages' ? 'none' : 'flex';
-    document.getElementById('fabRow').style.display = currentTab === 'pages' ? 'none' : 'flex';
-    document.getElementById('fabRowPages').style.display = currentTab === 'pages' ? 'flex' : 'none';
-    render();
-  });
+function selectTab(tabKey) {
+  currentTab = tabKey;
+  document.querySelectorAll('#tabsList .tab-btn[data-tab]').forEach(b => b.classList.toggle('active', b.dataset.tab === tabKey));
+  const isPage = tabKey.startsWith('page:');
+  document.getElementById('entriesTab').style.display = tabKey === 'entries' ? 'block' : 'none';
+  document.getElementById('statsTab').style.display = tabKey === 'stats' ? 'block' : 'none';
+  document.getElementById('pageViewTab').style.display = isPage ? 'block' : 'none';
+  document.getElementById('monthNav').style.display = isPage ? 'none' : 'flex';
+  document.getElementById('fabRow').style.display = isPage ? 'none' : 'flex';
+  render();
+}
+document.getElementById('tabsList').addEventListener('click', (e) => {
+  const btn = e.target.closest('.tab-btn[data-tab]');
+  if (!btn) return;
+  selectTab(btn.dataset.tab);
+});
+document.getElementById('addPageTab').addEventListener('click', () => openPageEditor(null));
+document.getElementById('editPageBtn').addEventListener('click', () => {
+  if (!currentTab.startsWith('page:')) return;
+  openPageEditor(currentTab.slice(5));
+});
+document.getElementById('deletePageInlineBtn').addEventListener('click', () => {
+  if (!currentTab.startsWith('page:')) return;
+  pendingDeleteId = currentTab.slice(5);
+  pendingDeleteType = 'page';
+  document.getElementById('confirmTitle').textContent = t('confirmTitlePage');
+  document.getElementById('confirmOverlay').classList.add('show');
 });
 document.getElementById('prevMonth').addEventListener('click', () => { monthOffset--; render(); });
 document.getElementById('nextMonth').addEventListener('click', () => { if (monthOffset < 0) { monthOffset++; render(); } });
@@ -998,7 +1013,6 @@ document.getElementById('addExpenseCatBtn').addEventListener('click', () => addC
 document.getElementById('addIncomeCatBtn').addEventListener('click', () => addCategoryFromInput('income'));
 document.getElementById('newExpenseCatInput').addEventListener('keydown', (e) => { if (e.key === 'Enter') addCategoryFromInput('expense'); });
 document.getElementById('newIncomeCatInput').addEventListener('keydown', (e) => { if (e.key === 'Enter') addCategoryFromInput('income'); });
-document.getElementById('openNewPage').addEventListener('click', () => openPageEditor(null));
 document.getElementById('closePage').addEventListener('click', () => document.getElementById('pageOverlay').classList.remove('show'));
 document.getElementById('pageOverlay').addEventListener('click', (e) => { if (e.target.id === 'pageOverlay') e.currentTarget.classList.remove('show'); });
 document.getElementById('savePageBtn').addEventListener('click', savePage);

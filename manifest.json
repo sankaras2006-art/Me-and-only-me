@@ -1,6 +1,6 @@
 {
-  "name": "Мої фінанси",
-  "short_name": "Фінанси",
+  "name": "My life",
+  "short_name": "My life",
   "description": "Особистий облік витрат і доходів",
   "start_url": "./index.html",
   "scope": "./",
