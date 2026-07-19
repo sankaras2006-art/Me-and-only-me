@@ -379,6 +379,7 @@ function applyStaticTranslations() {
   renderCurrencyPicker();
   renderCategoryManager();
   renderAuthLangRow();
+  if (typeof currentTab !== 'undefined') updateHeaderSectionTitle();
 }
 
 function renderAuthLangRow() {
@@ -976,7 +977,15 @@ function selectTab(tabKey) {
   document.getElementById('monthNav').style.display = isPage ? 'none' : 'flex';
   document.getElementById('fabRow').style.display = isPage ? 'none' : 'flex';
   document.getElementById('appMenuOverlay').classList.remove('show');
+  updateHeaderSectionTitle();
   render();
+}
+
+function updateHeaderSectionTitle() {
+  const titleEl = document.getElementById('headerSectionTitle');
+  const text = currentTab === 'stats' ? t('tabStats') : '';
+  titleEl.textContent = text;
+  titleEl.classList.toggle('show', !!text);
 }
 document.getElementById('tabsList').addEventListener('click', (e) => {
   const btn = e.target.closest('.tab-btn[data-tab]');

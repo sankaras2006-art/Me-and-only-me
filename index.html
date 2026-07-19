@@ -58,10 +58,14 @@
   /* ---- Main app ---- */
   #appScreen{display:none;}
   .header{background:var(--surface);border-bottom:1px solid var(--border);padding:calc(28px + env(safe-area-inset-top)) 20px 22px;position:relative;}
-  .header-actions{position:absolute;top:calc(22px + env(safe-area-inset-top));right:18px;display:flex;gap:6px;}
+  .header-actions{position:absolute;top:calc(22px + env(safe-area-inset-top));right:18px;display:flex;gap:6px;z-index:2;}
   .header-icon-btn{background:none;border:none;cursor:pointer;color:var(--ink-muted);padding:7px;border-radius:8px;display:flex;align-items:center;}
   .header-icon-btn:hover{background:var(--bg);color:var(--ink);}
   .header-icon-btn.active{background:var(--accent-light);color:var(--accent);}
+  .header-section-title{display:none;position:absolute;top:calc(22px + env(safe-area-inset-top));left:50%;
+    transform:translateX(-50%);font-family:'Inter',sans-serif;font-weight:700;font-size:16px;
+    color:var(--ink);white-space:nowrap;line-height:31px;}
+  .header-section-title.show{display:block;}
   .eyebrow{display:flex;align-items:center;justify-content:space-between;margin-bottom:6px;}
   .app-topbar{display:flex;align-items:center;gap:10px;padding:calc(16px + env(safe-area-inset-top)) 20px 6px;}
   .app-topbar-brand{display:flex;align-items:center;gap:8px;font-family:'Inter',sans-serif;font-weight:700;font-size:15px;color:var(--ink);}
@@ -287,6 +291,7 @@
         <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12.586 2.586A2 2 0 0 0 11.172 2H4a2 2 0 0 0-2 2v7.172a2 2 0 0 0 .586 1.414l8.704 8.704a2.426 2.426 0 0 0 3.42 0l6.58-6.58a2.426 2.426 0 0 0 0-3.42z"/><circle cx="7.5" cy="7.5" r="1.5"/></svg>
       </button>
     </div>
+    <div class="header-section-title" id="headerSectionTitle"></div>
     <div id="balanceSummary">
       <div class="eyebrow-left" style="margin-bottom:6px;">
         <svg class="icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#5B7A9D" stroke-width="2"><path d="M21 12V7H5a2 2 0 0 1 0-4h14v4"/><path d="M3 5v14a2 2 0 0 0 2 2h16v-5"/><path d="M18 12a2 2 0 0 0 0 4h4v-4Z"/></svg>
