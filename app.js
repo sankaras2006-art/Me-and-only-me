@@ -969,6 +969,8 @@ function selectTab(tabKey) {
   currentTab = tabKey;
   document.querySelectorAll('#tabsList .tab-btn[data-tab]').forEach(b => b.classList.toggle('active', b.dataset.tab === tabKey));
   document.getElementById('statsToggleBtn').classList.toggle('active', tabKey === 'stats');
+  document.getElementById('header').classList.toggle('wide', tabKey === 'stats');
+  document.getElementById('monthNav').classList.toggle('wide', tabKey === 'stats');
   const isPage = tabKey.startsWith('page:');
   document.getElementById('balanceSummary').style.display = tabKey === 'entries' ? 'block' : 'none';
   document.getElementById('entriesTab').style.display = tabKey === 'entries' ? 'block' : 'none';
