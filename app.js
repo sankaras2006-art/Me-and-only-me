@@ -51,7 +51,7 @@ const T = {
     saveError: 'Не вдалося зберегти. Перевір інтернет-з’єднання',
     confirmTitle: 'Видалити запис?', confirmSub: 'Цю дію не можна скасувати.',
     cancelBtn: 'Скасувати', deleteBtn: 'Видалити',
-    settingsTitle: 'Налаштування', langLabel: 'Мова', currencyLabel: 'Валюта',
+    settingsTitle: 'Налаштування', fullscreenLabel: 'Повний екран', langLabel: 'Мова', currencyLabel: 'Валюта',
     expenseCatManageLabel: 'Категорії витрат', incomeCatManageLabel: 'Категорії доходів',
     newCatPlaceholder: 'Нова категорія', addCatAria: 'Додати категорію', deleteCatAria: 'Видалити категорію',
     catLastError: 'Має залишитися хоча б одна категорія',
@@ -114,7 +114,7 @@ const T = {
     saveError: 'Не удалось сохранить. Проверь интернет-соединение',
     confirmTitle: 'Удалить запись?', confirmSub: 'Это действие нельзя отменить.',
     cancelBtn: 'Отмена', deleteBtn: 'Удалить',
-    settingsTitle: 'Настройки', langLabel: 'Язык', currencyLabel: 'Валюта',
+    settingsTitle: 'Настройки', fullscreenLabel: 'Полный экран', langLabel: 'Язык', currencyLabel: 'Валюта',
     expenseCatManageLabel: 'Категории расходов', incomeCatManageLabel: 'Категории доходов',
     newCatPlaceholder: 'Новая категория', addCatAria: 'Добавить категорию', deleteCatAria: 'Удалить категорию',
     catLastError: 'Должна остаться хотя бы одна категория',
@@ -177,7 +177,7 @@ const T = {
     saveError: 'Nie udało się zapisać. Sprawdź połączenie z internetem',
     confirmTitle: 'Usunąć wpis?', confirmSub: 'Tej czynności nie można cofnąć.',
     cancelBtn: 'Anuluj', deleteBtn: 'Usuń',
-    settingsTitle: 'Ustawienia', langLabel: 'Język', currencyLabel: 'Waluta',
+    settingsTitle: 'Ustawienia', fullscreenLabel: 'Pełny ekran', langLabel: 'Język', currencyLabel: 'Waluta',
     expenseCatManageLabel: 'Kategorie wydatków', incomeCatManageLabel: 'Kategorie przychodów',
     newCatPlaceholder: 'Nowa kategoria', addCatAria: 'Dodaj kategorię', deleteCatAria: 'Usuń kategorię',
     catLastError: 'Musi zostać przynajmniej jedna kategoria',
@@ -240,7 +240,7 @@ const T = {
     saveError: 'Could not save. Check your internet connection',
     confirmTitle: 'Delete entry?', confirmSub: 'This action cannot be undone.',
     cancelBtn: 'Cancel', deleteBtn: 'Delete',
-    settingsTitle: 'Settings', langLabel: 'Language', currencyLabel: 'Currency',
+    settingsTitle: 'Settings', fullscreenLabel: 'Fullscreen', langLabel: 'Language', currencyLabel: 'Currency',
     expenseCatManageLabel: 'Expense categories', incomeCatManageLabel: 'Income categories',
     newCatPlaceholder: 'New category', addCatAria: 'Add category', deleteCatAria: 'Delete category',
     catLastError: 'At least one category must remain',
@@ -392,13 +392,15 @@ function applyStaticTranslations() {
   document.getElementById('forgotPasswordLink').textContent = t('forgotPassword');
   setAuthMode(authMode);
   document.getElementById('balanceLabel').textContent = t('balanceLabel');
-  document.getElementById('logoutBtn').textContent = t('logout');
+  document.getElementById('logoutLabel').textContent = t('logout');
   document.getElementById('incomeLabel').textContent = t('incomeMonthLabel');
   document.getElementById('expenseLabel').textContent = t('expenseMonthLabel');
   document.getElementById('tabEntries').textContent = t('tabEntries');
   document.getElementById('tabStats').textContent = t('tabStats');
   document.getElementById('addPageTabLabel').textContent = t('newPageBtn');
-  document.getElementById('sidebarBrandLabel').textContent = t('appTitle');
+  document.getElementById('topbarBrandLabel').textContent = t('appTitle');
+  document.getElementById('fullscreenLabel').textContent = t('fullscreenLabel');
+  document.getElementById('settingsMenuLabel').textContent = t('settingsTitle');
   document.getElementById('pageTitleLabel').textContent = t('pageTitleLabel');
   document.getElementById('pageContentLabel').textContent = t('pageContentLabel');
   document.getElementById('pageTitleInput').placeholder = t('pageTitlePlaceholder');
@@ -827,7 +829,10 @@ document.getElementById('forgotPasswordLink').addEventListener('click', async ()
   }
 });
 
-document.getElementById('logoutBtn').addEventListener('click', () => auth.signOut());
+document.getElementById('logoutBtn').addEventListener('click', () => {
+  document.getElementById('appMenuOverlay').classList.remove('show');
+  auth.signOut();
+});
 
 auth.onAuthStateChanged((user) => {
   if (user) {
@@ -1275,7 +1280,12 @@ document.getElementById('confirmDelete').addEventListener('click', async () => {
     }
   } catch (e) { console.error(e); }
 });
-document.getElementById('settingsBtn').addEventListener('click', () => document.getElementById('settingsOverlay').classList.add('show'));
+document.getElementById('menuBtn').addEventListener('click', () => document.getElementById('appMenuOverlay').classList.add('show'));
+document.getElementById('appMenuOverlay').addEventListener('click', (e) => { if (e.target.id === 'appMenuOverlay') e.currentTarget.classList.remove('show'); });
+document.getElementById('settingsBtn').addEventListener('click', () => {
+  document.getElementById('appMenuOverlay').classList.remove('show');
+  document.getElementById('settingsOverlay').classList.add('show');
+});
 document.getElementById('closeSettings').addEventListener('click', () => document.getElementById('settingsOverlay').classList.remove('show'));
 document.getElementById('settingsOverlay').addEventListener('click', (e) => { if (e.target.id === 'settingsOverlay') e.currentTarget.classList.remove('show'); });
 document.getElementById('addExpenseCatBtn').addEventListener('click', () => addCategoryFromInput('expense'));
@@ -1314,6 +1324,7 @@ function updateFullscreenBtnVisibility() {
 updateFullscreenBtnVisibility();
 
 document.getElementById('fullscreenBtn').addEventListener('click', () => {
+  document.getElementById('appMenuOverlay').classList.remove('show');
   if (document.fullscreenElement) {
     document.exitFullscreen().catch(() => {});
   } else {
