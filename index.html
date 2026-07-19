@@ -62,7 +62,6 @@
   .eyebrow{display:flex;align-items:center;justify-content:space-between;margin-bottom:6px;}
   .app-topbar{display:flex;align-items:center;gap:10px;padding:calc(16px + env(safe-area-inset-top)) 20px 6px;}
   .app-topbar-brand{display:flex;align-items:center;gap:8px;font-family:'Inter',sans-serif;font-weight:700;font-size:15px;color:var(--ink);}
-  @media (max-width:879px){ .app-topbar-brand{display:none;} }
   .menu-btn{background:none;border:none;cursor:pointer;color:var(--ink);padding:7px;display:flex;border-radius:8px;margin-left:-7px;}
   .menu-btn:hover{background:var(--border);}
   .app-menu-overlay{position:fixed;inset:0;z-index:55;display:none;}
@@ -208,22 +207,14 @@
   /* ---- Desktop layout ---- */
   @media (min-width:880px){
     body{padding-bottom:32px;}
-    .wrap{max-width:none;margin:0;padding:0 40px;
-      display:grid;grid-template-columns:220px 1fr;column-gap:36px;
-      grid-template-areas:"topbar topbar" "tabs header" "tabs monthnav" "tabs content";
-      align-items:start;}
-    .app-topbar{grid-area:topbar;padding:28px 0 0;}
-    .header{grid-area:header;border-bottom:none;border-radius:16px;border:1px solid var(--border);
-      padding:26px 26px 24px;margin-top:20px;}
-    .month-nav{grid-area:monthnav;justify-content:flex-start;padding:20px 4px 0;}
-    .content{grid-area:content;padding:14px 4px 40px;}
-    .tabs{grid-area:tabs;flex-direction:column;background:transparent;padding:0;gap:4px;
-      margin:20px 0 0;position:sticky;top:28px;align-self:start;height:fit-content;
-      max-height:calc(100vh - 60px);overflow-y:auto;overflow-x:visible;}
-    .tab-btn{text-align:left;padding:11px 14px;border-radius:9px;}
-    .tab-btn.active{background:var(--accent-light);color:var(--accent);box-shadow:none;}
+    .wrap{max-width:none;margin:0;padding:0 40px;}
+    .app-topbar{padding:28px 0 0;}
+    .header{border-bottom:none;border-radius:16px;border:1px solid var(--border);
+      padding:26px 26px 24px;margin-top:20px;max-width:760px;}
+    .month-nav{justify-content:flex-start;padding:20px 4px 0;}
+    .content{padding:14px 4px 40px;max-width:760px;}
 
-    #statsTab{display:grid;grid-template-columns:1fr 1fr;gap:18px;align-items:start;}
+    #statsTab{display:grid;grid-template-columns:1fr 1fr;gap:18px;align-items:start;max-width:960px;}
     #statsTab .card{margin-bottom:0;}
 
     .fab-row{left:auto;right:32px;bottom:32px;justify-content:flex-end;padding:0;}
@@ -277,6 +268,15 @@
 
   <div class="app-menu-overlay" id="appMenuOverlay">
     <div class="app-menu" id="appMenu">
+      <div class="tabs" id="tabsList">
+        <button class="tab-btn active" data-tab="entries" id="tabEntries">Записи</button>
+        <button class="tab-btn" data-tab="stats" id="tabStats">Статистика</button>
+        <div id="pageTabsList"></div>
+        <button class="tab-btn tab-add" id="addPageTab" type="button">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" style="flex-shrink:0;"><path d="M12 5v14M5 12h14"/></svg>
+          <span id="addPageTabLabel">Нова сторінка</span>
+        </button>
+      </div>
       <div class="app-menu-divider" id="appMenuDivider"></div>
       <button class="app-menu-item" id="fullscreenBtn" style="display:none;">
         <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" id="fullscreenIcon"><path d="M8 3H5a2 2 0 0 0-2 2v3m18 0V5a2 2 0 0 0-2-2h-3m0 18h3a2 2 0 0 0 2-2v-3M3 16v3a2 2 0 0 0 2 2h3"/></svg>
@@ -311,16 +311,6 @@
         </div>
       </div>
     </div>
-  </div>
-
-  <div class="tabs" id="tabsList">
-    <button class="tab-btn active" data-tab="entries" id="tabEntries">Записи</button>
-    <button class="tab-btn" data-tab="stats" id="tabStats">Статистика</button>
-    <div id="pageTabsList"></div>
-    <button class="tab-btn tab-add" id="addPageTab" type="button">
-      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" style="flex-shrink:0;"><path d="M12 5v14M5 12h14"/></svg>
-      <span id="addPageTabLabel">Нова сторінка</span>
-    </button>
   </div>
 
   <div class="month-nav" id="monthNav">
