@@ -1238,6 +1238,7 @@ function selectTab(tabKey) {
   document.getElementById('pageViewTab').style.display = isPage ? 'block' : 'none';
   document.getElementById('monthNav').style.display = isPage ? 'none' : 'flex';
   document.getElementById('fabRow').style.display = isPage ? 'none' : 'flex';
+  document.getElementById('appMenuOverlay').classList.remove('show');
   render();
 }
 document.getElementById('tabsList').addEventListener('click', (e) => {
@@ -1245,7 +1246,29 @@ document.getElementById('tabsList').addEventListener('click', (e) => {
   if (!btn) return;
   selectTab(btn.dataset.tab);
 });
-document.getElementById('addPageTab').addEventListener('click', () => openPageEditor(null));
+document.getElementById('addPageTab').addEventListener('click', () => {
+  document.getElementById('appMenuOverlay').classList.remove('show');
+  openPageEditor(null);
+});
+
+// ---- Переміщення списку вкладок: сайдбар на ПК, випадне меню на мобільному ----
+const desktopMedia = window.matchMedia('(min-width:880px)');
+function relocateTabsList() {
+  const tabsEl = document.getElementById('tabsList');
+  const wrapEl = document.getElementById('wrap');
+  const menuDivider = document.getElementById('appMenuDivider');
+  if (desktopMedia.matches) {
+    if (tabsEl.parentElement !== wrapEl) wrapEl.appendChild(tabsEl);
+  } else {
+    if (tabsEl.parentElement !== menuDivider.parentElement) menuDivider.parentElement.insertBefore(tabsEl, menuDivider);
+  }
+}
+relocateTabsList();
+if (desktopMedia.addEventListener) {
+  desktopMedia.addEventListener('change', relocateTabsList);
+} else if (desktopMedia.addListener) {
+  desktopMedia.addListener(relocateTabsList);
+}
 document.getElementById('editPageBtn').addEventListener('click', () => {
   if (!currentTab.startsWith('page:')) return;
   openPageEditor(currentTab.slice(5));
