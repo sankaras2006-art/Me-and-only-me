@@ -51,7 +51,7 @@ const T = {
     saveError: 'Не вдалося зберегти. Перевір інтернет-з’єднання',
     confirmTitle: 'Видалити запис?', confirmSub: 'Цю дію не можна скасувати.',
     cancelBtn: 'Скасувати', deleteBtn: 'Видалити',
-    settingsTitle: 'Налаштування', fullscreenLabel: 'Повний екран', langLabel: 'Мова', currencyLabel: 'Валюта', categoriesTitle: 'Категорії',
+    settingsTitle: 'Налаштування', langLabel: 'Мова', currencyLabel: 'Валюта', categoriesTitle: 'Категорії',
     expenseCatManageLabel: 'Категорії витрат', incomeCatManageLabel: 'Категорії доходів',
     newCatPlaceholder: 'Нова категорія', addCatAria: 'Додати категорію', deleteCatAria: 'Видалити категорію',
     catLastError: 'Має залишитися хоча б одна категорія',
@@ -100,7 +100,7 @@ const T = {
     saveError: 'Не удалось сохранить. Проверь интернет-соединение',
     confirmTitle: 'Удалить запись?', confirmSub: 'Это действие нельзя отменить.',
     cancelBtn: 'Отмена', deleteBtn: 'Удалить',
-    settingsTitle: 'Настройки', fullscreenLabel: 'Полный экран', langLabel: 'Язык', currencyLabel: 'Валюта', categoriesTitle: 'Категории',
+    settingsTitle: 'Настройки', langLabel: 'Язык', currencyLabel: 'Валюта', categoriesTitle: 'Категории',
     expenseCatManageLabel: 'Категории расходов', incomeCatManageLabel: 'Категории доходов',
     newCatPlaceholder: 'Новая категория', addCatAria: 'Добавить категорию', deleteCatAria: 'Удалить категорию',
     catLastError: 'Должна остаться хотя бы одна категория',
@@ -149,7 +149,7 @@ const T = {
     saveError: 'Nie udało się zapisać. Sprawdź połączenie z internetem',
     confirmTitle: 'Usunąć wpis?', confirmSub: 'Tej czynności nie można cofnąć.',
     cancelBtn: 'Anuluj', deleteBtn: 'Usuń',
-    settingsTitle: 'Ustawienia', fullscreenLabel: 'Pełny ekran', langLabel: 'Język', currencyLabel: 'Waluta', categoriesTitle: 'Kategorie',
+    settingsTitle: 'Ustawienia', langLabel: 'Język', currencyLabel: 'Waluta', categoriesTitle: 'Kategorie',
     expenseCatManageLabel: 'Kategorie wydatków', incomeCatManageLabel: 'Kategorie przychodów',
     newCatPlaceholder: 'Nowa kategoria', addCatAria: 'Dodaj kategorię', deleteCatAria: 'Usuń kategorię',
     catLastError: 'Musi zostać przynajmniej jedna kategoria',
@@ -198,7 +198,7 @@ const T = {
     saveError: 'Could not save. Check your internet connection',
     confirmTitle: 'Delete entry?', confirmSub: 'This action cannot be undone.',
     cancelBtn: 'Cancel', deleteBtn: 'Delete',
-    settingsTitle: 'Settings', fullscreenLabel: 'Fullscreen', langLabel: 'Language', currencyLabel: 'Currency', categoriesTitle: 'Categories',
+    settingsTitle: 'Settings', langLabel: 'Language', currencyLabel: 'Currency', categoriesTitle: 'Categories',
     expenseCatManageLabel: 'Expense categories', incomeCatManageLabel: 'Income categories',
     newCatPlaceholder: 'New category', addCatAria: 'Add category', deleteCatAria: 'Delete category',
     catLastError: 'At least one category must remain',
@@ -339,7 +339,6 @@ function applyStaticTranslations() {
   document.getElementById('expenseLabel').textContent = t('expenseMonthLabel');
   document.getElementById('tabEntries').textContent = t('tabEntries');
   document.getElementById('topbarBrandLabel').textContent = t('appTitle');
-  document.getElementById('fullscreenLabel').textContent = t('fullscreenLabel');
   document.getElementById('settingsMenuLabel').textContent = t('settingsTitle');
   document.getElementById('pageTitleLabel').textContent = t('pageTitleLabel');
   document.getElementById('pageContentLabel').textContent = t('pageContentLabel');
@@ -1044,41 +1043,6 @@ document.getElementById('deletePageBtn').addEventListener('click', () => {
   document.getElementById('confirmTitle').textContent = t('confirmTitlePage');
   document.getElementById('confirmOverlay').classList.add('show');
 });
-
-// ---- Повноекранний режим (тільки ПК, встановлений як застосунок) ----
-const isDesktopPointer = window.matchMedia('(pointer: fine) and (hover: hover)').matches;
-const isStandaloneApp = window.matchMedia('(display-mode: standalone)').matches || window.navigator.standalone === true;
-
-function updateFullscreenBtnVisibility() {
-  const btn = document.getElementById('fullscreenBtn');
-  if (isDesktopPointer && document.fullscreenEnabled) {
-    btn.style.display = 'flex';
-  } else {
-    btn.style.display = 'none';
-  }
-}
-updateFullscreenBtnVisibility();
-
-document.getElementById('fullscreenBtn').addEventListener('click', () => {
-  document.getElementById('appMenuOverlay').classList.remove('show');
-  if (document.fullscreenElement) {
-    document.exitFullscreen().catch(() => {});
-  } else {
-    document.documentElement.requestFullscreen().catch(() => {});
-  }
-});
-
-if (isDesktopPointer && isStandaloneApp && document.fullscreenEnabled) {
-  const autoFullscreenOnce = () => {
-    if (!document.fullscreenElement) {
-      document.documentElement.requestFullscreen().catch(() => {});
-    }
-    document.removeEventListener('click', autoFullscreenOnce);
-    document.removeEventListener('keydown', autoFullscreenOnce);
-  };
-  document.addEventListener('click', autoFullscreenOnce, { once: true });
-  document.addEventListener('keydown', autoFullscreenOnce, { once: true });
-}
 
 // ---- Старт ----
 applyStaticTranslations();
