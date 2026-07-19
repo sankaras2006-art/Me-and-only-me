@@ -64,8 +64,11 @@
   .header-icon-btn.active{background:var(--accent-light);color:var(--accent);}
   .header-section-title{display:none;position:absolute;top:calc(22px + env(safe-area-inset-top));left:50%;
     transform:translateX(-50%);font-family:'Inter',sans-serif;font-weight:700;font-size:16px;
-    color:var(--ink);white-space:nowrap;line-height:31px;}
+    color:var(--ink);white-space:nowrap;}
   .header-section-title.show{display:block;}
+  .header.compact{min-height:64px;}
+  .header.compact .header-actions{top:50%;transform:translateY(-50%);}
+  .header.compact .header-section-title{top:50%;transform:translate(-50%,-50%);}
   .eyebrow{display:flex;align-items:center;justify-content:space-between;margin-bottom:6px;}
   .app-topbar{display:flex;align-items:center;gap:10px;padding:calc(16px + env(safe-area-inset-top)) 20px 6px;}
   .app-topbar-brand{display:flex;align-items:center;gap:8px;font-family:'Inter',sans-serif;font-weight:700;font-size:15px;color:var(--ink);}
