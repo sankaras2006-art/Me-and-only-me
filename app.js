@@ -872,6 +872,33 @@ function subscribeToPages(uid) {
   });
 }
 
+function openCategoryTxModal(catId, monthTx, ty, tm) {
+  const nomMonths = MONTHS_NOM[currentLang] || MONTHS_NOM.uk;
+  const genMonths = MONTHS_GEN[currentLang] || MONTHS_GEN.uk;
+  const catTx = monthTx.filter(tx => tx.type === 'expense' && tx.category === catId)
+    .sort((a, b) => b.date.localeCompare(a.date) || String(b.id).localeCompare(String(a.id)));
+  const total = catTx.reduce((s, tx) => s + tx.amount, 0);
+
+  document.getElementById('categoryTxTitle').textContent = catDisplay('expense', catId);
+  document.getElementById('categoryTxSub').textContent = `${nomMonths[tm]} ${ty} · ${formatMoney(total)}`;
+
+  const list = document.getElementById('categoryTxList');
+  if (catTx.length === 0) {
+    list.innerHTML = `<div class="empty" style="padding:24px 0;">${t('statsNoExpenses')}</div>`;
+  } else {
+    list.innerHTML = catTx.map(tx => {
+      const dateObj = new Date(tx.date);
+      const dayLabel = `${dateObj.getDate()} ${genMonths[dateObj.getMonth()]}`;
+      return `<div class="entry">
+        <span class="cat-tag-date">${dayLabel}</span>
+        <div class="entry-note">${escapeHtml(tx.note || '')}</div>
+        <div class="entry-amount">\u2212${formatMoney(tx.amount).replace('\u2212', '')}</div>
+      </div>`;
+    }).join('');
+  }
+  document.getElementById('categoryTxOverlay').classList.add('show');
+}
+
 function renderStats(monthTx, ty, tm) {
   const map = {};
   monthTx.filter(tx => tx.type === 'expense').forEach(tx => { map[tx.category] = (map[tx.category] || 0) + tx.amount; });
@@ -903,11 +930,14 @@ function renderStats(monthTx, ty, tm) {
       }
     });
     document.getElementById('pieLegend').innerHTML = ids.map((id, i) => `
-      <div class="legend-row">
+      <button type="button" class="legend-row" data-cat="${id}">
         <span class="legend-dot" style="background:${catColor('expense', id)}"></span>
         <span class="legend-name">${escapeHtml(catDisplay('expense', id))}</span>
         <span class="legend-val">${formatMoney(entries[i][1])}</span>
-      </div>`).join('');
+      </button>`).join('');
+    document.getElementById('pieLegend').querySelectorAll('.legend-row').forEach(row => {
+      row.addEventListener('click', () => openCategoryTxModal(row.dataset.cat, monthTx, ty, tm));
+    });
   }
 
   const now = new Date();
@@ -1095,6 +1125,8 @@ document.getElementById('settingsBtn').addEventListener('click', () => {
   document.getElementById('settingsOverlay').classList.add('show');
 });
 document.getElementById('closeSettings').addEventListener('click', () => document.getElementById('settingsOverlay').classList.remove('show'));
+document.getElementById('closeCategoryTx').addEventListener('click', () => document.getElementById('categoryTxOverlay').classList.remove('show'));
+document.getElementById('categoryTxOverlay').addEventListener('click', (e) => { if (e.target.id === 'categoryTxOverlay') e.currentTarget.classList.remove('show'); });
 document.getElementById('settingsOverlay').addEventListener('click', (e) => { if (e.target.id === 'settingsOverlay') e.currentTarget.classList.remove('show'); });
 document.getElementById('addExpenseCatBtn').addEventListener('click', () => addCategoryFromInput('expense'));
 document.getElementById('addIncomeCatBtn').addEventListener('click', () => addCategoryFromInput('income'));
