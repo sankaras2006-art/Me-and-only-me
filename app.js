@@ -39,12 +39,12 @@ const T = {
     confirmTitlePage: 'Видалити сторінку?',
     pageNoTitle: 'Без назви',
     emptyTitle: 'Тут поки порожньо', emptySub: 'Додай перший запис кнопкою внизу',
-    deleteAria: 'Видалити запис',
+    deleteAria: 'Видалити запис', entryMenuAria: 'Дії із записом', menuEdit: 'Редагувати', menuDelete: 'Видалити',
     statsCatTitle: 'Витрати за категоріями', statsNoExpenses: 'Немає витрат цього місяця',
     statsTrendTitle: 'Дохід і витрати', statsTrendSub: 'Останні 6 місяців',
     chartIncome: 'Дохід', chartExpense: 'Витрати',
     fabExpense: 'Витрата', fabIncome: 'Дохід',
-    newExpenseTitle: 'Нова витрата', newIncomeTitle: 'Новий дохід',
+    newExpenseTitle: 'Нова витрата', newIncomeTitle: 'Новий дохід', editExpenseTitle: 'Редагувати витрату', editIncomeTitle: 'Редагувати дохід',
     amountLabel: 'Сума, {symbol}', catLabel: 'Категорія', dateLabel: 'Дата',
     noteLabel: 'Нотатка (необовʼязково)', notePlaceholder: 'Напр. кава з другом',
     saveBtn: 'Зберегти запис', amountError: 'Введи суму більшу за нуль',
@@ -88,12 +88,12 @@ const T = {
     confirmTitlePage: 'Удалить страницу?',
     pageNoTitle: 'Без названия',
     emptyTitle: 'Здесь пока пусто', emptySub: 'Добавь первую запись кнопкой внизу',
-    deleteAria: 'Удалить запись',
+    deleteAria: 'Удалить запись', entryMenuAria: 'Действия с записью', menuEdit: 'Редактировать', menuDelete: 'Удалить',
     statsCatTitle: 'Расходы по категориям', statsNoExpenses: 'Нет расходов в этом месяце',
     statsTrendTitle: 'Доход и расходы', statsTrendSub: 'Последние 6 месяцев',
     chartIncome: 'Доход', chartExpense: 'Расходы',
     fabExpense: 'Расход', fabIncome: 'Доход',
-    newExpenseTitle: 'Новый расход', newIncomeTitle: 'Новый доход',
+    newExpenseTitle: 'Новый расход', newIncomeTitle: 'Новый доход', editExpenseTitle: 'Редактировать расход', editIncomeTitle: 'Редактировать доход',
     amountLabel: 'Сумма, {symbol}', catLabel: 'Категория', dateLabel: 'Дата',
     noteLabel: 'Заметка (необязательно)', notePlaceholder: 'Напр. кофе с другом',
     saveBtn: 'Сохранить запись', amountError: 'Введи сумму больше нуля',
@@ -137,12 +137,12 @@ const T = {
     confirmTitlePage: 'Usunąć stronę?',
     pageNoTitle: 'Bez tytułu',
     emptyTitle: 'Tu jeszcze pusto', emptySub: 'Dodaj pierwszy wpis przyciskiem poniżej',
-    deleteAria: 'Usuń wpis',
+    deleteAria: 'Usuń wpis', entryMenuAria: 'Działania na wpisie', menuEdit: 'Edytuj', menuDelete: 'Usuń',
     statsCatTitle: 'Wydatki wg kategorii', statsNoExpenses: 'Brak wydatków w tym miesiącu',
     statsTrendTitle: 'Przychody i wydatki', statsTrendSub: 'Ostatnie 6 miesięcy',
     chartIncome: 'Przychód', chartExpense: 'Wydatki',
     fabExpense: 'Wydatek', fabIncome: 'Przychód',
-    newExpenseTitle: 'Nowy wydatek', newIncomeTitle: 'Nowy przychód',
+    newExpenseTitle: 'Nowy wydatek', newIncomeTitle: 'Nowy przychód', editExpenseTitle: 'Edytuj wydatek', editIncomeTitle: 'Edytuj przychód',
     amountLabel: 'Kwota, {symbol}', catLabel: 'Kategoria', dateLabel: 'Data',
     noteLabel: 'Notatka (opcjonalnie)', notePlaceholder: 'Np. kawa ze znajomym',
     saveBtn: 'Zapisz wpis', amountError: 'Wpisz kwotę większą od zera',
@@ -186,12 +186,12 @@ const T = {
     confirmTitlePage: 'Delete page?',
     pageNoTitle: 'Untitled',
     emptyTitle: 'Nothing here yet', emptySub: 'Add your first entry using the button below',
-    deleteAria: 'Delete entry',
+    deleteAria: 'Delete entry', entryMenuAria: 'Entry actions', menuEdit: 'Edit', menuDelete: 'Delete',
     statsCatTitle: 'Expenses by category', statsNoExpenses: 'No expenses this month',
     statsTrendTitle: 'Income & expenses', statsTrendSub: 'Last 6 months',
     chartIncome: 'Income', chartExpense: 'Expenses',
     fabExpense: 'Expense', fabIncome: 'Income',
-    newExpenseTitle: 'New expense', newIncomeTitle: 'New income',
+    newExpenseTitle: 'New expense', newIncomeTitle: 'New income', editExpenseTitle: 'Edit expense', editIncomeTitle: 'Edit income',
     amountLabel: 'Amount, {symbol}', catLabel: 'Category', dateLabel: 'Date',
     noteLabel: 'Note (optional)', notePlaceholder: 'E.g. coffee with a friend',
     saveBtn: 'Save entry', amountError: 'Enter an amount greater than zero',
@@ -296,6 +296,8 @@ let usingDefaultCategories = { expense: true, income: true };
 let selectedCategory = categoriesExpense[0] ? categoriesExpense[0].id : null;
 let pendingDeleteId = null;
 let pendingDeleteType = 'entry'; // 'entry' | 'page'
+let entryMenuTxId = null;
+let editingTxId = null;
 let pages = [];
 let unsubscribePages = null;
 let currentPageId = null; // page being edited, null = new page
@@ -375,6 +377,8 @@ function applyStaticTranslations() {
   document.getElementById('addIncomeCatBtn').setAttribute('aria-label', t('addCatAria'));
   const cur = CURRENCIES[currentCurrency] || CURRENCIES.UAH;
   document.getElementById('amountLabel').textContent = t('amountLabel', { symbol: cur.symbol });
+  document.getElementById('editEntryLabel').textContent = t('menuEdit');
+  document.getElementById('deleteEntryLabel').textContent = t('menuDelete');
   renderLangPicker();
   renderCurrencyPicker();
   renderCategoryManager();
@@ -507,7 +511,8 @@ function setAuthMode(mode) {
 
 document.getElementById('authToggle').addEventListener('click', () => setAuthMode('signup'));
 
-document.getElementById('authSubmit').addEventListener('click', async () => {
+document.getElementById('authForm').addEventListener('submit', async (e) => {
+  e.preventDefault();
   const email = document.getElementById('authEmail').value.trim();
   const password = document.getElementById('authPassword').value;
   const remember = document.getElementById('rememberMe').checked;
@@ -530,8 +535,13 @@ document.getElementById('authSubmit').addEventListener('click', async () => {
     } else {
       await auth.createUserWithEmailAndPassword(email, password);
     }
-  } catch (e) {
-    errEl.textContent = authErrorMessage(e.code);
+    if (remember) {
+      localStorage.setItem('financeAppLastEmail', email);
+    } else {
+      localStorage.removeItem('financeAppLastEmail');
+    }
+  } catch (e2) {
+    errEl.textContent = authErrorMessage(e2.code);
     errEl.style.display = 'block';
   } finally {
     btn.disabled = false;
@@ -586,10 +596,17 @@ auth.onAuthStateChanged((user) => {
     pages = [];
     document.getElementById('appScreen').style.display = 'none';
     document.getElementById('authScreen').style.display = 'flex';
-    document.getElementById('authEmail').value = '';
     document.getElementById('authPassword').value = '';
     document.getElementById('authInfo').style.display = 'none';
-    document.getElementById('rememberMe').checked = true;
+    const savedEmail = localStorage.getItem('financeAppLastEmail');
+    if (savedEmail) {
+      document.getElementById('authEmail').value = savedEmail;
+      document.getElementById('rememberMe').checked = true;
+      setTimeout(() => document.getElementById('authPassword').focus(), 50);
+    } else {
+      document.getElementById('authEmail').value = '';
+      document.getElementById('rememberMe').checked = true;
+    }
   }
 });
 
@@ -636,6 +653,10 @@ function subscribeToProfile(uid) {
 function addTransactionRemote(tx) {
   const uid = auth.currentUser.uid;
   return db.collection('users').doc(uid).collection('transactions').add(tx);
+}
+function updateTransactionRemote(id, tx) {
+  const uid = auth.currentUser.uid;
+  return db.collection('users').doc(uid).collection('transactions').doc(id).update(tx);
 }
 function deleteTransactionRemote(id) {
   const uid = auth.currentUser.uid;
@@ -726,21 +747,37 @@ function renderEntries(monthTx) {
         <span class="cat-tag" style="color:${catPair(tx.type, tx.category).text};background:${catPair(tx.type, tx.category).bg};">${escapeHtml(catDisplay(tx.type, tx.category))}</span>
         <div class="entry-note">${escapeHtml(tx.note || '')}</div>
         <div class="entry-amount ${tx.type === 'income' ? 'inc' : ''}">${tx.type === 'income' ? '+' : '\u2212'}${formatMoney(tx.amount).replace('\u2212', '')}</div>
-        <button class="del-btn" data-id="${tx.id}" aria-label="${t('deleteAria')}">
-          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 6h18M8 6V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2m3 0v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6h14Z"/></svg>
+        <button class="del-btn entry-menu-btn" data-id="${tx.id}" aria-label="${t('entryMenuAria')}">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="5" r="1.5"/><circle cx="12" cy="12" r="1.5"/><circle cx="12" cy="19" r="1.5"/></svg>
         </button>
       </div>`).join('');
     return `<div class="day-group"><div class="day-label">${dayLabel}</div><div class="day-card">${items}</div></div>`;
   }).join('');
 
-  container.querySelectorAll('.del-btn').forEach(btn => {
-    btn.addEventListener('click', () => {
-      pendingDeleteId = btn.dataset.id;
-      pendingDeleteType = 'entry';
-      document.getElementById('confirmTitle').textContent = t('confirmTitle');
-      document.getElementById('confirmOverlay').classList.add('show');
+  container.querySelectorAll('.entry-menu-btn').forEach(btn => {
+    btn.addEventListener('click', (e) => {
+      e.stopPropagation();
+      openEntryMenu(btn);
     });
   });
+}
+
+function openEntryMenu(btn) {
+  entryMenuTxId = btn.dataset.id;
+  const rect = btn.getBoundingClientRect();
+  const overlay = document.getElementById('entryMenuOverlay');
+  const menu = document.getElementById('entryMenu');
+  overlay.classList.add('show');
+  const menuWidth = menu.offsetWidth || 170;
+  let left = rect.right - menuWidth;
+  if (left < 8) left = 8;
+  const maxLeft = window.innerWidth - menuWidth - 8;
+  if (left > maxLeft) left = maxLeft;
+  let top = rect.bottom + 6;
+  const menuHeight = menu.offsetHeight || 100;
+  if (top + menuHeight > window.innerHeight - 8) top = rect.top - menuHeight - 6;
+  menu.style.left = left + 'px';
+  menu.style.top = top + 'px';
 }
 
 function pageSnippet(text) {
@@ -903,17 +940,21 @@ function renderStats(monthTx, ty, tm) {
 }
 
 // ---- Форма додавання ----
-function openForm(type) {
+function openForm(type, existingTx) {
   formType = type;
+  editingTxId = existingTx ? existingTx.id : null;
   const list = type === 'expense' ? categoriesExpense : categoriesIncome;
-  selectedCategory = list[0] ? list[0].id : null;
-  document.getElementById('modalTitle').textContent = type === 'income' ? t('newIncomeTitle') : t('newExpenseTitle');
+  selectedCategory = existingTx ? existingTx.category : (list[0] ? list[0].id : null);
+  const isEdit = !!existingTx;
+  document.getElementById('modalTitle').textContent = isEdit
+    ? (type === 'income' ? t('editIncomeTitle') : t('editExpenseTitle'))
+    : (type === 'income' ? t('newIncomeTitle') : t('newExpenseTitle'));
   document.getElementById('modalTitle').style.color = type === 'income' ? '#7FA88F' : '#C97B5A';
   document.getElementById('submitBtn').style.background = type === 'income' ? '#7FA88F' : '#C97B5A';
   document.getElementById('submitBtn').textContent = t('saveBtn');
-  document.getElementById('amountInput').value = '';
-  document.getElementById('noteInput').value = '';
-  document.getElementById('dateInput').value = todayISO();
+  document.getElementById('amountInput').value = existingTx ? String(existingTx.amount).replace('.', ',') : '';
+  document.getElementById('noteInput').value = existingTx ? (existingTx.note || '') : '';
+  document.getElementById('dateInput').value = existingTx ? existingTx.date : todayISO();
   document.getElementById('dateInput').max = todayISO();
   document.getElementById('formError').style.display = 'none';
   renderCatPicker();
@@ -954,7 +995,12 @@ async function submitForm() {
     date: document.getElementById('dateInput').value || todayISO(),
   };
   try {
-    await addTransactionRemote(tx);
+    if (editingTxId) {
+      await updateTransactionRemote(editingTxId, tx);
+    } else {
+      await addTransactionRemote(tx);
+    }
+    editingTxId = null;
     document.getElementById('formOverlay').classList.remove('show');
   } catch (e) {
     errEl.textContent = t('saveError');
@@ -1010,8 +1056,8 @@ document.getElementById('prevMonth').addEventListener('click', () => { monthOffs
 document.getElementById('nextMonth').addEventListener('click', () => { if (monthOffset < 0) { monthOffset++; render(); } });
 document.getElementById('openExpense').addEventListener('click', () => openForm('expense'));
 document.getElementById('openIncome').addEventListener('click', () => openForm('income'));
-document.getElementById('closeForm').addEventListener('click', () => document.getElementById('formOverlay').classList.remove('show'));
-document.getElementById('formOverlay').addEventListener('click', (e) => { if (e.target.id === 'formOverlay') e.currentTarget.classList.remove('show'); });
+document.getElementById('closeForm').addEventListener('click', () => { editingTxId = null; document.getElementById('formOverlay').classList.remove('show'); });
+document.getElementById('formOverlay').addEventListener('click', (e) => { if (e.target.id === 'formOverlay') { editingTxId = null; e.currentTarget.classList.remove('show'); } });
 document.getElementById('submitBtn').addEventListener('click', submitForm);
 document.getElementById('cancelDelete').addEventListener('click', () => { pendingDeleteId = null; document.getElementById('confirmOverlay').classList.remove('show'); });
 document.getElementById('confirmOverlay').addEventListener('click', (e) => { if (e.target.id === 'confirmOverlay') e.currentTarget.classList.remove('show'); });
@@ -1028,6 +1074,19 @@ document.getElementById('confirmDelete').addEventListener('click', async () => {
       await deleteTransactionRemote(id);
     }
   } catch (e) { console.error(e); }
+});
+document.getElementById('entryMenuOverlay').addEventListener('click', (e) => { if (e.target.id === 'entryMenuOverlay') e.currentTarget.classList.remove('show'); });
+document.getElementById('editEntryBtn').addEventListener('click', () => {
+  document.getElementById('entryMenuOverlay').classList.remove('show');
+  const tx = transactions.find(t => t.id === entryMenuTxId);
+  if (tx) openForm(tx.type, tx);
+});
+document.getElementById('deleteEntryBtn').addEventListener('click', () => {
+  document.getElementById('entryMenuOverlay').classList.remove('show');
+  pendingDeleteId = entryMenuTxId;
+  pendingDeleteType = 'entry';
+  document.getElementById('confirmTitle').textContent = t('confirmTitle');
+  document.getElementById('confirmOverlay').classList.add('show');
 });
 document.getElementById('menuBtn').addEventListener('click', () => document.getElementById('appMenuOverlay').classList.add('show'));
 document.getElementById('appMenuOverlay').addEventListener('click', (e) => { if (e.target.id === 'appMenuOverlay') e.currentTarget.classList.remove('show'); });
