@@ -385,7 +385,7 @@ function applyStaticTranslations() {
   document.getElementById('editEntryLabel').textContent = t('menuEdit');
   document.getElementById('deleteEntryLabel').textContent = t('menuDelete');
   document.getElementById('statsToggleLabel').textContent = t('tabStats');
-  document.getElementById('tabSavings').textContent = t('tabSavings');
+  document.getElementById('savingsToggleLabel').textContent = t('tabSavings');
   document.getElementById('savingsBalanceLabel').textContent = t('savingsBalanceLabel');
   document.getElementById('fabDepositLabel').textContent = t('fabDepositLabel');
   document.getElementById('fabWithdrawLabel').textContent = t('fabWithdrawLabel');
@@ -1177,6 +1177,7 @@ function selectTab(tabKey) {
   currentTab = tabKey;
   document.querySelectorAll('#tabsList .tab-btn[data-tab]').forEach(b => b.classList.toggle('active', b.dataset.tab === tabKey));
   document.getElementById('statsToggleBtn').classList.toggle('active', tabKey === 'stats');
+  document.getElementById('savingsToggleBtn').classList.toggle('active', tabKey === 'savings');
   document.getElementById('header').classList.toggle('wide', tabKey === 'stats');
   document.getElementById('header').classList.toggle('compact', tabKey !== 'entries');
   document.getElementById('monthNav').classList.toggle('wide', tabKey === 'stats');
@@ -1284,6 +1285,7 @@ document.getElementById('categoriesBtn').addEventListener('click', () => documen
 document.getElementById('closeCategories').addEventListener('click', () => document.getElementById('categoriesOverlay').classList.remove('show'));
 document.getElementById('categoriesOverlay').addEventListener('click', (e) => { if (e.target.id === 'categoriesOverlay') e.currentTarget.classList.remove('show'); });
 document.getElementById('statsToggleBtn').addEventListener('click', () => selectTab(currentTab === 'stats' ? 'entries' : 'stats'));
+document.getElementById('savingsToggleBtn').addEventListener('click', () => selectTab(currentTab === 'savings' ? 'entries' : 'savings'));
 document.getElementById('closePage').addEventListener('click', () => document.getElementById('pageOverlay').classList.remove('show'));
 document.getElementById('pageOverlay').addEventListener('click', (e) => { if (e.target.id === 'pageOverlay') e.currentTarget.classList.remove('show'); });
 document.getElementById('savePageBtn').addEventListener('click', savePage);
