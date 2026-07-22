@@ -70,6 +70,12 @@
   .header.compact{min-height:64px;}
   .header.compact .header-actions{top:50%;transform:translateY(-50%);}
   .header.compact .header-section-title{top:50%;transform:translate(-50%,-50%);}
+  .month-nav-header{display:none;position:absolute;top:calc(22px + env(safe-area-inset-top));left:50%;
+    transform:translateX(-50%);align-items:center;gap:8px;}
+  .month-nav-header.show{display:flex;}
+  .month-nav-header button{background:none;border:none;cursor:pointer;color:var(--ink-muted);padding:4px;display:flex;}
+  .month-nav-header button:disabled{color:var(--border);cursor:default;}
+  .month-nav-header .month-label{font-family:'Inter',sans-serif;font-size:13.5px;font-weight:600;color:var(--ink-soft);white-space:nowrap;}
   .eyebrow{display:flex;align-items:center;justify-content:space-between;margin-bottom:6px;}
   .app-topbar{display:flex;align-items:center;gap:10px;padding:calc(16px + env(safe-area-inset-top)) 20px 6px;}
   .app-topbar-brand{display:flex;align-items:center;gap:8px;font-family:'Inter',sans-serif;font-weight:700;font-size:15px;color:var(--ink);}
@@ -189,6 +195,7 @@
   .tab-btn.page-tab{display:flex;align-items:center;gap:8px;overflow:hidden;}
   .tab-btn.page-tab .page-tab-label{overflow:hidden;text-overflow:ellipsis;white-space:nowrap;}
   .tab-btn.tab-add{display:flex;align-items:center;gap:7px;color:var(--ink-muted);}
+  .tab-btn.tab-btn-with-icon{display:flex;align-items:center;gap:9px;}
   #pageTitleInput{margin-bottom:14px;}
   #pageContentInput{width:100%;font-family:'Inter',sans-serif;font-size:14.5px;line-height:1.55;border:1px solid var(--border);
     border-radius:8px;padding:10px 12px;outline:none;color:var(--ink);background:var(--bg);resize:vertical;min-height:180px;margin-bottom:16px;}
@@ -282,7 +289,10 @@
   <div class="app-menu-overlay" id="appMenuOverlay">
     <div class="app-menu" id="appMenu">
       <div class="tabs" id="tabsList">
-        <button class="tab-btn active" data-tab="entries" id="tabEntries">Записи</button>
+        <button class="tab-btn active tab-btn-with-icon" data-tab="entries" id="tabEntries">
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="flex-shrink:0;"><path d="M21 12V7H5a2 2 0 0 1 0-4h14v4"/><path d="M3 5v14a2 2 0 0 0 2 2h16v-5"/><path d="M18 12a2 2 0 0 0 0 4h4v-4Z"/></svg>
+          <span id="tabEntriesLabel">Записи</span>
+        </button>
         <div id="pageTabsList"></div>
       </div>
       <div class="app-menu-divider" id="appMenuDivider"></div>
@@ -310,6 +320,11 @@
       </button>
     </div>
     <div class="header-section-title" id="headerSectionTitle"></div>
+    <div class="month-nav-header show" id="monthNavHeader">
+      <button id="prevMonthHeader" aria-label="Попередній місяць"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M15 18l-6-6 6-6"/></svg></button>
+      <div class="month-label" id="monthLabelHeader">—</div>
+      <button id="nextMonthHeader" aria-label="Наступний місяць"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 18l6-6-6-6"/></svg></button>
+    </div>
     <div id="balanceSummary">
       <div class="eyebrow-left" style="margin-bottom:6px;">
         <svg class="icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#5B7A9D" stroke-width="2"><path d="M21 12V7H5a2 2 0 0 1 0-4h14v4"/><path d="M3 5v14a2 2 0 0 0 2 2h16v-5"/><path d="M18 12a2 2 0 0 0 0 4h4v-4Z"/></svg>
@@ -329,7 +344,7 @@
     </div>
   </div>
 
-  <div class="month-nav" id="monthNav">
+  <div class="month-nav" id="monthNav" style="display:none;">
     <button id="prevMonth" aria-label="Попередній місяць"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M15 18l-6-6 6-6"/></svg></button>
     <div class="month-label" id="monthLabel">—</div>
     <button id="nextMonth" aria-label="Наступний місяць"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 18l6-6-6-6"/></svg></button>
