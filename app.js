@@ -340,7 +340,6 @@ function applyStaticTranslations() {
   document.getElementById('rememberMeLabel').textContent = t('rememberMe');
   document.getElementById('forgotPasswordLink').textContent = t('forgotPassword');
   setAuthMode(authMode);
-  document.getElementById('balanceLabel').textContent = t('balanceLabel');
   document.getElementById('logoutLabel').textContent = t('logout');
   document.getElementById('incomeLabel').textContent = t('incomeMonthLabel');
   document.getElementById('expenseLabel').textContent = t('expenseMonthLabel');
