@@ -344,7 +344,7 @@ function applyStaticTranslations() {
   document.getElementById('logoutLabel').textContent = t('logout');
   document.getElementById('incomeLabel').textContent = t('incomeMonthLabel');
   document.getElementById('expenseLabel').textContent = t('expenseMonthLabel');
-  document.getElementById('tabEntries').textContent = t('tabEntries');
+  document.getElementById('tabEntriesLabel').textContent = t('tabEntries');
   document.getElementById('topbarBrandLabel').textContent = t('appTitle');
   document.getElementById('settingsMenuLabel').textContent = t('settingsTitle');
   document.getElementById('pageTitleLabel').textContent = t('pageTitleLabel');
@@ -745,8 +745,10 @@ function render() {
   const nomMonths = MONTHS_NOM[currentLang] || MONTHS_NOM.uk;
 
   document.getElementById('monthLabel').textContent = `${nomMonths[tm]} ${ty}`;
+  document.getElementById('monthLabelHeader').textContent = `${nomMonths[tm]} ${ty}`;
   document.getElementById('statsMonthLabel').textContent = `${nomMonths[tm]} ${ty}`;
   document.getElementById('nextMonth').disabled = monthOffset === 0;
+  document.getElementById('nextMonthHeader').disabled = monthOffset === 0;
 
   const balance = transactions.reduce((s, tx) => s + (tx.type === 'income' ? tx.amount : -tx.amount), 0);
   const balEl = document.getElementById('balance');
@@ -1188,7 +1190,8 @@ function selectTab(tabKey) {
   document.getElementById('statsTab').style.display = tabKey === 'stats' ? 'block' : 'none';
   document.getElementById('savingsTab').style.display = isSavings ? 'block' : 'none';
   document.getElementById('pageViewTab').style.display = isPage ? 'block' : 'none';
-  document.getElementById('monthNav').style.display = (isPage || isSavings) ? 'none' : 'flex';
+  document.getElementById('monthNav').style.display = (isPage || isSavings || tabKey === 'entries') ? 'none' : 'flex';
+  document.getElementById('monthNavHeader').classList.toggle('show', tabKey === 'entries');
   document.getElementById('fabRow').style.display = (isPage || isSavings) ? 'none' : 'flex';
   document.getElementById('savingsFabRow').style.display = isSavings ? 'flex' : 'none';
   document.getElementById('appMenuOverlay').classList.remove('show');
@@ -1221,6 +1224,8 @@ document.getElementById('deletePageInlineBtn').addEventListener('click', () => {
 });
 document.getElementById('prevMonth').addEventListener('click', () => { monthOffset--; render(); });
 document.getElementById('nextMonth').addEventListener('click', () => { if (monthOffset < 0) { monthOffset++; render(); } });
+document.getElementById('prevMonthHeader').addEventListener('click', () => { monthOffset--; render(); });
+document.getElementById('nextMonthHeader').addEventListener('click', () => { if (monthOffset < 0) { monthOffset++; render(); } });
 document.getElementById('openExpense').addEventListener('click', () => openForm('expense'));
 document.getElementById('openIncome').addEventListener('click', () => openForm('income'));
 document.getElementById('closeForm').addEventListener('click', () => { editingTxId = null; document.getElementById('formOverlay').classList.remove('show'); });
@@ -1299,3 +1304,4 @@ document.getElementById('deletePageBtn').addEventListener('click', () => {
 
 // ---- Старт ----
 applyStaticTranslations();
+selectTab('entries');
