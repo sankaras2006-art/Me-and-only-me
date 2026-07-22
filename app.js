@@ -1189,8 +1189,9 @@ function selectTab(tabKey) {
   document.getElementById('statsTab').style.display = tabKey === 'stats' ? 'block' : 'none';
   document.getElementById('savingsTab').style.display = isSavings ? 'block' : 'none';
   document.getElementById('pageViewTab').style.display = isPage ? 'block' : 'none';
-  document.getElementById('monthNav').style.display = (isPage || isSavings || tabKey === 'entries') ? 'none' : 'flex';
-  document.getElementById('monthNavHeader').classList.toggle('show', tabKey === 'entries');
+  document.getElementById('monthNav').style.display = 'none';
+  document.getElementById('monthNavHeader').classList.toggle('show', tabKey === 'entries' || tabKey === 'stats');
+  document.getElementById('backToEntriesBtn').classList.toggle('show', tabKey !== 'entries');
   document.getElementById('fabRow').style.display = (isPage || isSavings) ? 'none' : 'flex';
   document.getElementById('savingsFabRow').style.display = isSavings ? 'flex' : 'none';
   document.getElementById('appMenuOverlay').classList.remove('show');
@@ -1201,9 +1202,8 @@ function selectTab(tabKey) {
 
 function updateHeaderSectionTitle() {
   const titleEl = document.getElementById('headerSectionTitle');
-  const text = currentTab === 'stats' ? t('tabStats') : (currentTab === 'savings' ? t('tabSavings') : '');
-  titleEl.textContent = text;
-  titleEl.classList.toggle('show', !!text);
+  titleEl.textContent = '';
+  titleEl.classList.remove('show');
 }
 document.getElementById('tabsList').addEventListener('click', (e) => {
   const btn = e.target.closest('.tab-btn[data-tab]');
@@ -1223,6 +1223,7 @@ document.getElementById('deletePageInlineBtn').addEventListener('click', () => {
 });
 document.getElementById('prevMonth').addEventListener('click', () => { monthOffset--; render(); });
 document.getElementById('nextMonth').addEventListener('click', () => { if (monthOffset < 0) { monthOffset++; render(); } });
+document.getElementById('backToEntriesBtn').addEventListener('click', () => selectTab('entries'));
 document.getElementById('prevMonthHeader').addEventListener('click', () => { monthOffset--; render(); });
 document.getElementById('nextMonthHeader').addEventListener('click', () => { if (monthOffset < 0) { monthOffset++; render(); } });
 document.getElementById('openExpense').addEventListener('click', () => openForm('expense'));
