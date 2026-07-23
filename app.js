@@ -41,7 +41,7 @@ const T = {
     emptyTitle: 'Тут поки порожньо', emptySub: 'Додай перший запис кнопкою внизу',
     deleteAria: 'Видалити запис', entryMenuAria: 'Дії із записом', menuEdit: 'Редагувати', menuDelete: 'Видалити',
     statsCatTitle: 'Витрати за категоріями', statsNoExpenses: 'Немає витрат цього місяця',
-    statsTrendTitle: 'Дохід і витрати', statsTrendSub: 'Останні 6 місяців',
+    statsTrendTitle: 'Дохід і витрати', statsTrendSub: 'Останні 6 місяців', lastLabel: 'Останні',
     chartIncome: 'Дохід', chartExpense: 'Витрати',
     fabExpense: 'Витрата', fabIncome: 'Дохід',
     newExpenseTitle: 'Нова витрата', newIncomeTitle: 'Новий дохід', editExpenseTitle: 'Редагувати витрату', editIncomeTitle: 'Редагувати дохід',
@@ -90,7 +90,7 @@ const T = {
     emptyTitle: 'Здесь пока пусто', emptySub: 'Добавь первую запись кнопкой внизу',
     deleteAria: 'Удалить запись', entryMenuAria: 'Действия с записью', menuEdit: 'Редактировать', menuDelete: 'Удалить',
     statsCatTitle: 'Расходы по категориям', statsNoExpenses: 'Нет расходов в этом месяце',
-    statsTrendTitle: 'Доход и расходы', statsTrendSub: 'Последние 6 месяцев',
+    statsTrendTitle: 'Доход и расходы', statsTrendSub: 'Последние 6 месяцев', lastLabel: 'Последние',
     chartIncome: 'Доход', chartExpense: 'Расходы',
     fabExpense: 'Расход', fabIncome: 'Доход',
     newExpenseTitle: 'Новый расход', newIncomeTitle: 'Новый доход', editExpenseTitle: 'Редактировать расход', editIncomeTitle: 'Редактировать доход',
@@ -139,7 +139,7 @@ const T = {
     emptyTitle: 'Tu jeszcze pusto', emptySub: 'Dodaj pierwszy wpis przyciskiem poniżej',
     deleteAria: 'Usuń wpis', entryMenuAria: 'Działania na wpisie', menuEdit: 'Edytuj', menuDelete: 'Usuń',
     statsCatTitle: 'Wydatki wg kategorii', statsNoExpenses: 'Brak wydatków w tym miesiącu',
-    statsTrendTitle: 'Przychody i wydatki', statsTrendSub: 'Ostatnie 6 miesięcy',
+    statsTrendTitle: 'Przychody i wydatki', statsTrendSub: 'Ostatnie 6 miesięcy', lastLabel: 'Ostatnie',
     chartIncome: 'Przychód', chartExpense: 'Wydatki',
     fabExpense: 'Wydatek', fabIncome: 'Przychód',
     newExpenseTitle: 'Nowy wydatek', newIncomeTitle: 'Nowy przychód', editExpenseTitle: 'Edytuj wydatek', editIncomeTitle: 'Edytuj przychód',
@@ -188,7 +188,7 @@ const T = {
     emptyTitle: 'Nothing here yet', emptySub: 'Add your first entry using the button below',
     deleteAria: 'Delete entry', entryMenuAria: 'Entry actions', menuEdit: 'Edit', menuDelete: 'Delete',
     statsCatTitle: 'Expenses by category', statsNoExpenses: 'No expenses this month',
-    statsTrendTitle: 'Income & expenses', statsTrendSub: 'Last 6 months',
+    statsTrendTitle: 'Income & expenses', statsTrendSub: 'Last 6 months', lastLabel: 'Last',
     chartIncome: 'Income', chartExpense: 'Expenses',
     fabExpense: 'Expense', fabIncome: 'Income',
     newExpenseTitle: 'New expense', newIncomeTitle: 'New income', editExpenseTitle: 'Edit expense', editIncomeTitle: 'Edit income',
@@ -289,6 +289,13 @@ if (!CURRENCY_CODES.includes(currentCurrency)) currentCurrency = 'UAH';
 let transactions = [];
 let monthOffset = 0;
 let currentTab = 'entries';
+let trendPeriodMonths = 6;
+const MONTHS_WORD = {
+  uk: { 3: 'місяці', 6: 'місяців', 12: 'місяців' },
+  ru: { 3: 'месяца', 6: 'месяцев', 12: 'месяцев' },
+  pl: { 3: 'miesiące', 6: 'miesięcy', 12: 'miesięcy' },
+  en: { 3: 'months', 6: 'months', 12: 'months' },
+};
 let formType = 'expense';
 let categoriesExpense = defaultCategories('expense');
 let categoriesIncome = defaultCategories('income');
@@ -1076,13 +1083,15 @@ function renderStats(monthTx, ty, tm) {
   const now = new Date();
   const nomMonths = MONTHS_NOM[currentLang] || MONTHS_NOM.uk;
   const labels = [], incomeData = [], expenseData = [];
-  for (let i = 5; i >= 0; i--) {
+  for (let i = trendPeriodMonths - 1; i >= 0; i--) {
     const d = new Date(now.getFullYear(), now.getMonth() - i, 1);
     const y = d.getFullYear(), m = d.getMonth();
     labels.push(nomMonths[m].slice(0, 3));
     incomeData.push(transactions.filter(tx => { const td = new Date(tx.date); return td.getFullYear() === y && td.getMonth() === m && tx.type === 'income'; }).reduce((s, tx) => s + tx.amount, 0));
     expenseData.push(transactions.filter(tx => { const td = new Date(tx.date); return td.getFullYear() === y && td.getMonth() === m && tx.type === 'expense'; }).reduce((s, tx) => s + tx.amount, 0));
   }
+  const wordMap = MONTHS_WORD[currentLang] || MONTHS_WORD.uk;
+  document.getElementById('statsTrendSub').textContent = `${t('lastLabel')} ${trendPeriodMonths} ${wordMap[trendPeriodMonths] || wordMap[6]}`;
   const barCanvas = document.getElementById('barChart');
   if (barChart) barChart.destroy();
   barChart = new Chart(barCanvas, {
@@ -1221,6 +1230,13 @@ document.getElementById('deletePageInlineBtn').addEventListener('click', () => {
 document.getElementById('prevMonth').addEventListener('click', () => { monthOffset--; render(); });
 document.getElementById('nextMonth').addEventListener('click', () => { if (monthOffset < 0) { monthOffset++; render(); } });
 document.getElementById('backToEntriesBtn').addEventListener('click', () => selectTab('entries'));
+document.getElementById('trendPeriodPicker').addEventListener('click', (e) => {
+  const btn = e.target.closest('.period-btn');
+  if (!btn) return;
+  trendPeriodMonths = parseInt(btn.dataset.months, 10);
+  document.querySelectorAll('#trendPeriodPicker .period-btn').forEach(b => b.classList.toggle('active', b === btn));
+  render();
+});
 document.getElementById('prevMonthHeader').addEventListener('click', () => { monthOffset--; render(); });
 document.getElementById('nextMonthHeader').addEventListener('click', () => { if (monthOffset < 0) { monthOffset++; render(); } });
 document.getElementById('openExpense').addEventListener('click', () => openForm('expense'));
