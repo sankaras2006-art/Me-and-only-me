@@ -28,7 +28,7 @@ const T = {
     err_resetFailed: 'Не вдалося надіслати лист. Перевір email і спробуй ще раз',
     balanceLabel: 'Кошти', logout: 'Вийти',
     incomeMonthLabel: 'Дохід за місяць', expenseMonthLabel: 'Витрати за місяць',
-    tabEntries: 'Кошти', tabStats: 'Статистика', tabPages: 'Сторінки', tabSavings: 'Збереження', savingsBalanceLabel: 'Баланс заощаджень', savingsEmptySub: 'Додай першу операцію кнопкою внизу', fabDepositLabel: 'Поповнити', fabWithdrawLabel: 'Зняти', newDepositTitle: 'Поповнення', newWithdrawTitle: 'Зняття коштів', editDepositTitle: 'Редагувати поповнення', editWithdrawTitle: 'Редагувати зняття',
+    tabEntries: 'Кошти', tabStats: 'Статистика', tabPages: 'Сторінки', tabSavings: 'Збереження', savingsBalanceLabel: 'Баланс заощаджень', savingsEmptySub: 'Додай першу операцію кнопкою внизу', fabDepositLabel: 'Поповнити', fabWithdrawLabel: 'Зняти', newDepositTitle: 'Поповнення', newWithdrawTitle: 'Зняття коштів', editDepositTitle: 'Редагувати поповнення', editWithdrawTitle: 'Редагувати зняття', savingsTotalLabel: 'Загальний баланс заощаджень', addGoalLabel: 'Нова ціль', goalFormTitleNew: 'Нова ціль', goalFormTitleEdit: 'Редагувати ціль', goalNameLabel: 'Назва', goalNamePlaceholder: 'Напр. На відпустку', goalNameError: 'Введи назву цілі', deleteGoalLabel: 'Видалити ціль', confirmTitleGoal: 'Видалити ціль?', confirmSubGoal: 'Усі операції в цій цілі теж буде видалено.', defaultGoalName: 'Загальні заощадження',
     prevMonthAria: 'Попередній місяць', nextMonthAria: 'Наступний місяць',
     newPageBtn: 'Нова сторінка', pageTitleLabel: 'Назва', pageContentLabel: 'Текст',
     pageTitlePlaceholder: 'Напр. Ідеї на відпустку', pageContentPlaceholder: 'Пиши тут що завгодно…',
@@ -77,7 +77,7 @@ const T = {
     err_resetFailed: 'Не удалось отправить письмо. Проверь email и попробуй ещё раз',
     balanceLabel: 'Средства', logout: 'Выйти',
     incomeMonthLabel: 'Доход за месяц', expenseMonthLabel: 'Расходы за месяц',
-    tabEntries: 'Средства', tabStats: 'Статистика', tabPages: 'Страницы', tabSavings: 'Сбережения', savingsBalanceLabel: 'Баланс сбережений', savingsEmptySub: 'Добавь первую операцию кнопкой внизу', fabDepositLabel: 'Пополнить', fabWithdrawLabel: 'Снять', newDepositTitle: 'Пополнение', newWithdrawTitle: 'Снятие средств', editDepositTitle: 'Редактировать пополнение', editWithdrawTitle: 'Редактировать снятие',
+    tabEntries: 'Средства', tabStats: 'Статистика', tabPages: 'Страницы', tabSavings: 'Сбережения', savingsBalanceLabel: 'Баланс сбережений', savingsEmptySub: 'Добавь первую операцию кнопкой внизу', fabDepositLabel: 'Пополнить', fabWithdrawLabel: 'Снять', newDepositTitle: 'Пополнение', newWithdrawTitle: 'Снятие средств', editDepositTitle: 'Редактировать пополнение', editWithdrawTitle: 'Редактировать снятие', savingsTotalLabel: 'Общий баланс сбережений', addGoalLabel: 'Новая цель', goalFormTitleNew: 'Новая цель', goalFormTitleEdit: 'Редактировать цель', goalNameLabel: 'Название', goalNamePlaceholder: 'Напр. На отпуск', goalNameError: 'Введи название цели', deleteGoalLabel: 'Удалить цель', confirmTitleGoal: 'Удалить цель?', confirmSubGoal: 'Все операции в этой цели тоже будут удалены.', defaultGoalName: 'Общие сбережения',
     prevMonthAria: 'Предыдущий месяц', nextMonthAria: 'Следующий месяц',
     newPageBtn: 'Новая страница', pageTitleLabel: 'Название', pageContentLabel: 'Текст',
     pageTitlePlaceholder: 'Напр. Идеи на отпуск', pageContentPlaceholder: 'Пиши здесь что угодно…',
@@ -126,7 +126,7 @@ const T = {
     err_resetFailed: 'Nie udało się wysłać emaila. Sprawdź adres i spróbuj ponownie',
     balanceLabel: 'Środki', logout: 'Wyloguj',
     incomeMonthLabel: 'Przychód w tym miesiącu', expenseMonthLabel: 'Wydatki w tym miesiącu',
-    tabEntries: 'Środki', tabStats: 'Statystyki', tabPages: 'Strony', tabSavings: 'Oszczędności', savingsBalanceLabel: 'Saldo oszczędności', savingsEmptySub: 'Dodaj pierwszą operację przyciskiem poniżej', fabDepositLabel: 'Wpłać', fabWithdrawLabel: 'Wypłać', newDepositTitle: 'Wpłata', newWithdrawTitle: 'Wypłata środków', editDepositTitle: 'Edytuj wpłatę', editWithdrawTitle: 'Edytuj wypłatę',
+    tabEntries: 'Środki', tabStats: 'Statystyki', tabPages: 'Strony', tabSavings: 'Oszczędności', savingsBalanceLabel: 'Saldo oszczędności', savingsEmptySub: 'Dodaj pierwszą operację przyciskiem poniżej', fabDepositLabel: 'Wpłać', fabWithdrawLabel: 'Wypłać', newDepositTitle: 'Wpłata', newWithdrawTitle: 'Wypłata środków', editDepositTitle: 'Edytuj wpłatę', editWithdrawTitle: 'Edytuj wypłatę', savingsTotalLabel: 'Łączne saldo oszczędności', addGoalLabel: 'Nowy cel', goalFormTitleNew: 'Nowy cel', goalFormTitleEdit: 'Edytuj cel', goalNameLabel: 'Nazwa', goalNamePlaceholder: 'Np. Na wakacje', goalNameError: 'Wpisz nazwę celu', deleteGoalLabel: 'Usuń cel', confirmTitleGoal: 'Usunąć cel?', confirmSubGoal: 'Wszystkie operacje w tym celu też zostaną usunięte.', defaultGoalName: 'Ogólne oszczędności',
     prevMonthAria: 'Poprzedni miesiąc', nextMonthAria: 'Następny miesiąc',
     newPageBtn: 'Nowa strona', pageTitleLabel: 'Tytuł', pageContentLabel: 'Treść',
     pageTitlePlaceholder: 'Np. Pomysły na wakacje', pageContentPlaceholder: 'Napisz tu cokolwiek…',
@@ -175,7 +175,7 @@ const T = {
     err_resetFailed: 'Could not send the email. Check the address and try again',
     balanceLabel: 'Funds', logout: 'Log out',
     incomeMonthLabel: 'Income this month', expenseMonthLabel: 'Expenses this month',
-    tabEntries: 'Funds', tabStats: 'Stats', tabPages: 'Pages', tabSavings: 'Savings', savingsBalanceLabel: 'Savings balance', savingsEmptySub: 'Add your first entry using the button below', fabDepositLabel: 'Deposit', fabWithdrawLabel: 'Withdraw', newDepositTitle: 'Deposit', newWithdrawTitle: 'Withdrawal', editDepositTitle: 'Edit deposit', editWithdrawTitle: 'Edit withdrawal',
+    tabEntries: 'Funds', tabStats: 'Stats', tabPages: 'Pages', tabSavings: 'Savings', savingsBalanceLabel: 'Savings balance', savingsEmptySub: 'Add your first entry using the button below', fabDepositLabel: 'Deposit', fabWithdrawLabel: 'Withdraw', newDepositTitle: 'Deposit', newWithdrawTitle: 'Withdrawal', editDepositTitle: 'Edit deposit', editWithdrawTitle: 'Edit withdrawal', savingsTotalLabel: 'Total savings balance', addGoalLabel: 'New goal', goalFormTitleNew: 'New goal', goalFormTitleEdit: 'Edit goal', goalNameLabel: 'Name', goalNamePlaceholder: 'E.g. Vacation fund', goalNameError: 'Enter a goal name', deleteGoalLabel: 'Delete goal', confirmTitleGoal: 'Delete goal?', confirmSubGoal: 'All entries in this goal will be deleted too.', defaultGoalName: 'General savings',
     prevMonthAria: 'Previous month', nextMonthAria: 'Next month',
     newPageBtn: 'New page', pageTitleLabel: 'Title', pageContentLabel: 'Content',
     pageTitlePlaceholder: 'E.g. Vacation ideas', pageContentPlaceholder: 'Write anything here…',
@@ -311,6 +311,13 @@ let savings = [];
 let unsubscribeSavings = null;
 let savingsFormType = 'deposit';
 let editingSavingId = null;
+let savingsGoals = [];
+let unsubscribeSavingsGoals = null;
+let currentSavingsGoalId = null;
+let editingGoalId = null;
+let savingsDataLoaded = false;
+let goalsDataLoaded = false;
+let migrationDone = false;
 let entryMenuKind = 'tx'; // 'tx' | 'saving'
 let currentPageId = null; // page being edited, null = new page
 let pieChart = null, barChart = null;
@@ -393,6 +400,11 @@ function applyStaticTranslations() {
   document.getElementById('statsToggleLabel').textContent = t('tabStats');
   document.getElementById('savingsToggleLabel').textContent = t('tabSavings');
   document.getElementById('savingsBalanceLabel').textContent = t('savingsBalanceLabel');
+  document.getElementById('savingsTotalLabel').textContent = t('savingsTotalLabel');
+  document.getElementById('addGoalLabel').textContent = t('addGoalLabel');
+  document.getElementById('goalNameLabel').textContent = t('goalNameLabel');
+  document.getElementById('goalNameInput').setAttribute('placeholder', t('goalNamePlaceholder'));
+  document.getElementById('deleteGoalBtn').textContent = t('deleteGoalLabel');
   document.getElementById('fabDepositLabel').textContent = t('fabDepositLabel');
   document.getElementById('fabWithdrawLabel').textContent = t('fabWithdrawLabel');
   document.getElementById('savingsAmountLabel').textContent = t('amountLabel', { symbol: cur.symbol });
@@ -609,14 +621,21 @@ auth.onAuthStateChanged((user) => {
     subscribeToProfile(user.uid);
     subscribeToPages(user.uid);
     subscribeToSavings(user.uid);
+    subscribeToSavingsGoals(user.uid);
   } else {
     if (unsubscribeSnapshot) { unsubscribeSnapshot(); unsubscribeSnapshot = null; }
     if (unsubscribeProfile) { unsubscribeProfile(); unsubscribeProfile = null; }
     if (unsubscribePages) { unsubscribePages(); unsubscribePages = null; }
     if (unsubscribeSavings) { unsubscribeSavings(); unsubscribeSavings = null; }
+    if (unsubscribeSavingsGoals) { unsubscribeSavingsGoals(); unsubscribeSavingsGoals = null; }
     transactions = [];
     pages = [];
     savings = [];
+    savingsGoals = [];
+    currentSavingsGoalId = null;
+    savingsDataLoaded = false;
+    goalsDataLoaded = false;
+    migrationDone = false;
     document.getElementById('appScreen').style.display = 'none';
     document.getElementById('authScreen').style.display = 'flex';
     document.getElementById('authPassword').value = '';
@@ -691,10 +710,62 @@ function subscribeToSavings(uid) {
   const col = db.collection('users').doc(uid).collection('savings');
   unsubscribeSavings = col.onSnapshot((snapshot) => {
     savings = snapshot.docs.map(d => ({ id: d.id, ...d.data() }));
-    if (currentTab === 'savings') renderSavings();
+    savingsDataLoaded = true;
+    maybeMigrateSavings();
+    if (currentTab === 'savings') {
+      if (currentSavingsGoalId) renderSavings(); else renderSavingsGoalsList();
+    }
   }, (err) => {
     console.error('Savings sync error', err);
   });
+}
+function subscribeToSavingsGoals(uid) {
+  if (unsubscribeSavingsGoals) unsubscribeSavingsGoals();
+  const col = db.collection('users').doc(uid).collection('savingsGoals');
+  unsubscribeSavingsGoals = col.onSnapshot((snapshot) => {
+    savingsGoals = snapshot.docs.map(d => ({ id: d.id, ...d.data() }));
+    goalsDataLoaded = true;
+    maybeMigrateSavings();
+    if (currentTab === 'savings') {
+      if (currentSavingsGoalId) renderSavings(); else renderSavingsGoalsList();
+    }
+  }, (err) => {
+    console.error('Savings goals sync error', err);
+  });
+}
+function maybeMigrateSavings() {
+  if (migrationDone || !savingsDataLoaded || !goalsDataLoaded) return;
+  const orphaned = savings.filter(sv => !sv.goalId);
+  if (orphaned.length === 0) { migrationDone = true; return; }
+  migrationDone = true;
+  const uid = auth.currentUser.uid;
+  db.collection('users').doc(uid).collection('savingsGoals').add({ name: t('defaultGoalName'), createdAt: firebase.firestore.FieldValue.serverTimestamp() })
+    .then(ref => {
+      const batch = db.batch();
+      orphaned.forEach(sv => {
+        const docRef = db.collection('users').doc(uid).collection('savings').doc(sv.id);
+        batch.update(docRef, { goalId: ref.id });
+      });
+      return batch.commit();
+    })
+    .catch(err => console.error('Migration failed', err));
+}
+function addSavingsGoalRemote(name) {
+  const uid = auth.currentUser.uid;
+  return db.collection('users').doc(uid).collection('savingsGoals').add({ name, createdAt: firebase.firestore.FieldValue.serverTimestamp() });
+}
+function updateSavingsGoalRemote(id, name) {
+  const uid = auth.currentUser.uid;
+  return db.collection('users').doc(uid).collection('savingsGoals').doc(id).update({ name });
+}
+async function deleteSavingsGoalRemote(id) {
+  const uid = auth.currentUser.uid;
+  const batch = db.batch();
+  savings.filter(sv => sv.goalId === id).forEach(sv => {
+    batch.delete(db.collection('users').doc(uid).collection('savings').doc(sv.id));
+  });
+  batch.delete(db.collection('users').doc(uid).collection('savingsGoals').doc(id));
+  return batch.commit();
 }
 function addSavingRemote(item) {
   const uid = auth.currentUser.uid;
@@ -810,20 +881,103 @@ function renderEntries(monthTx) {
   });
 }
 
+function goalBalance(goalId) {
+  return savings.filter(sv => sv.goalId === goalId).reduce((s, sv) => s + (sv.type === 'deposit' ? sv.amount : -sv.amount), 0);
+}
+
+function renderSavingsGoalsList() {
+  const total = savings.reduce((s, sv) => s + (sv.type === 'deposit' ? sv.amount : -sv.amount), 0);
+  const totalEl = document.getElementById('savingsTotalBalance');
+  totalEl.textContent = formatMoney(total);
+  totalEl.className = 'balance' + (total < 0 ? ' neg' : '');
+
+  const container = document.getElementById('savingsGoalsCards');
+  const sorted = [...savingsGoals].sort((a, b) => {
+    const ta = a.createdAt && a.createdAt.toMillis ? a.createdAt.toMillis() : 0;
+    const tb = b.createdAt && b.createdAt.toMillis ? b.createdAt.toMillis() : 0;
+    return ta - tb;
+  });
+  container.innerHTML = sorted.map(g => {
+    const bal = goalBalance(g.id);
+    return `<button type="button" class="goal-card" data-id="${g.id}">
+      <span class="goal-card-name">${escapeHtml(g.name || t('defaultGoalName'))}</span>
+      <span class="goal-card-balance">${formatMoney(bal)}</span>
+    </button>`;
+  }).join('');
+  container.querySelectorAll('.goal-card').forEach(card => {
+    card.addEventListener('click', () => openGoalDetail(card.dataset.id));
+  });
+}
+
+function openGoalDetail(goalId) {
+  currentSavingsGoalId = goalId;
+  const goal = savingsGoals.find(g => g.id === goalId);
+  document.getElementById('goalDetailTitle').textContent = goal ? (goal.name || t('defaultGoalName')) : '';
+  document.getElementById('savingsGoalsList').style.display = 'none';
+  document.getElementById('savingsGoalDetail').style.display = 'block';
+  document.getElementById('savingsFabRow').style.display = 'flex';
+  renderSavings();
+}
+
+function backToGoalsList() {
+  currentSavingsGoalId = null;
+  document.getElementById('savingsGoalDetail').style.display = 'none';
+  document.getElementById('savingsGoalsList').style.display = 'block';
+  document.getElementById('savingsFabRow').style.display = 'none';
+  renderSavingsGoalsList();
+}
+
+function openGoalForm(existingGoal) {
+  editingGoalId = existingGoal ? existingGoal.id : null;
+  document.getElementById('goalFormTitle').textContent = editingGoalId ? t('goalFormTitleEdit') : t('goalFormTitleNew');
+  document.getElementById('goalNameInput').value = existingGoal ? (existingGoal.name || '') : '';
+  document.getElementById('goalFormError').style.display = 'none';
+  document.getElementById('deleteGoalBtn').style.display = editingGoalId ? 'block' : 'none';
+  document.getElementById('goalFormOverlay').classList.add('show');
+  setTimeout(() => document.getElementById('goalNameInput').focus(), 50);
+}
+
+async function submitGoalForm() {
+  const name = document.getElementById('goalNameInput').value.trim();
+  const errEl = document.getElementById('goalFormError');
+  if (!name) {
+    errEl.textContent = t('goalNameError');
+    errEl.style.display = 'block';
+    return;
+  }
+  const btn = document.getElementById('goalFormSubmitBtn');
+  btn.disabled = true;
+  try {
+    if (editingGoalId) {
+      await updateSavingsGoalRemote(editingGoalId, name);
+    } else {
+      await addSavingsGoalRemote(name);
+    }
+    editingGoalId = null;
+    document.getElementById('goalFormOverlay').classList.remove('show');
+  } catch (e) {
+    errEl.textContent = t('saveError');
+    errEl.style.display = 'block';
+  } finally {
+    btn.disabled = false;
+  }
+}
+
 function renderSavings() {
-  const balance = savings.reduce((s, sv) => s + (sv.type === 'deposit' ? sv.amount : -sv.amount), 0);
+  const goalSavings = savings.filter(sv => sv.goalId === currentSavingsGoalId);
+  const balance = goalSavings.reduce((s, sv) => s + (sv.type === 'deposit' ? sv.amount : -sv.amount), 0);
   const balEl = document.getElementById('savingsBalance');
   balEl.textContent = formatMoney(balance);
   balEl.className = 'balance' + (balance < 0 ? ' neg' : '');
 
   const container = document.getElementById('savingsList');
-  if (savings.length === 0) {
+  if (goalSavings.length === 0) {
     container.innerHTML = `<div class="empty"><div class="title">${t('emptyTitle')}</div><div>${t('savingsEmptySub')}</div></div>`;
     return;
   }
   const genMonths = MONTHS_GEN[currentLang] || MONTHS_GEN.uk;
   const groups = {};
-  savings.forEach(sv => { (groups[sv.date] = groups[sv.date] || []).push(sv); });
+  goalSavings.forEach(sv => { (groups[sv.date] = groups[sv.date] || []).push(sv); });
   const dates = Object.keys(groups).sort((a, b) => b.localeCompare(a));
 
   container.innerHTML = dates.map(d => {
@@ -884,6 +1038,7 @@ async function submitSavingsForm() {
     amount: Math.round(num * 100) / 100,
     note: document.getElementById('savingsNoteInput').value.trim(),
     date: document.getElementById('savingsDateInput').value || todayISO(),
+    goalId: currentSavingsGoalId,
   };
   try {
     if (editingSavingId) {
@@ -1199,10 +1354,17 @@ function selectTab(tabKey) {
   document.getElementById('monthNavHeader').classList.toggle('show', tabKey === 'entries' || tabKey === 'stats');
   document.getElementById('backToEntriesBtn').classList.toggle('show', tabKey !== 'entries');
   document.getElementById('fabRow').style.display = (isPage || isSavings) ? 'none' : 'flex';
-  document.getElementById('savingsFabRow').style.display = isSavings ? 'flex' : 'none';
   document.getElementById('appMenuOverlay').classList.remove('show');
   updateHeaderSectionTitle();
-  if (isSavings) renderSavings();
+  if (isSavings) {
+    currentSavingsGoalId = null;
+    document.getElementById('savingsGoalDetail').style.display = 'none';
+    document.getElementById('savingsGoalsList').style.display = 'block';
+    document.getElementById('savingsFabRow').style.display = 'none';
+    renderSavingsGoalsList();
+  } else {
+    document.getElementById('savingsFabRow').style.display = 'none';
+  }
   render();
 }
 
@@ -1225,6 +1387,7 @@ document.getElementById('deletePageInlineBtn').addEventListener('click', () => {
   pendingDeleteId = currentTab.slice(5);
   pendingDeleteType = 'page';
   document.getElementById('confirmTitle').textContent = t('confirmTitlePage');
+  document.getElementById('confirmSub').textContent = t('confirmSub');
   document.getElementById('confirmOverlay').classList.add('show');
 });
 document.getElementById('prevMonth').addEventListener('click', () => { monthOffset--; render(); });
@@ -1257,6 +1420,10 @@ document.getElementById('confirmDelete').addEventListener('click', async () => {
       document.getElementById('pageOverlay').classList.remove('show');
     } else if (type === 'saving') {
       await deleteSavingRemote(id);
+    } else if (type === 'goal') {
+      await deleteSavingsGoalRemote(id);
+      document.getElementById('goalFormOverlay').classList.remove('show');
+      backToGoalsList();
     } else {
       await deleteTransactionRemote(id);
     }
@@ -1278,6 +1445,20 @@ document.getElementById('deleteEntryBtn').addEventListener('click', () => {
   pendingDeleteId = entryMenuTxId;
   pendingDeleteType = entryMenuKind === 'saving' ? 'saving' : 'entry';
   document.getElementById('confirmTitle').textContent = t('confirmTitle');
+  document.getElementById('confirmSub').textContent = t('confirmSub');
+  document.getElementById('confirmOverlay').classList.add('show');
+});
+document.getElementById('addSavingsGoalBtn').addEventListener('click', () => openGoalForm(null));
+document.getElementById('backToGoalsBtn').addEventListener('click', () => backToGoalsList());
+document.getElementById('closeGoalForm').addEventListener('click', () => { editingGoalId = null; document.getElementById('goalFormOverlay').classList.remove('show'); });
+document.getElementById('goalFormOverlay').addEventListener('click', (e) => { if (e.target.id === 'goalFormOverlay') { editingGoalId = null; e.currentTarget.classList.remove('show'); } });
+document.getElementById('goalFormSubmitBtn').addEventListener('click', submitGoalForm);
+document.getElementById('deleteGoalBtn').addEventListener('click', () => {
+  if (!editingGoalId) return;
+  pendingDeleteId = editingGoalId;
+  pendingDeleteType = 'goal';
+  document.getElementById('confirmTitle').textContent = t('confirmTitleGoal');
+  document.getElementById('confirmSub').textContent = t('confirmSubGoal');
   document.getElementById('confirmOverlay').classList.add('show');
 });
 document.getElementById('openDeposit').addEventListener('click', () => openSavingsForm('deposit'));
@@ -1312,6 +1493,7 @@ document.getElementById('deletePageBtn').addEventListener('click', () => {
   pendingDeleteId = currentPageId;
   pendingDeleteType = 'page';
   document.getElementById('confirmTitle').textContent = t('confirmTitlePage');
+  document.getElementById('confirmSub').textContent = t('confirmSub');
   document.getElementById('confirmOverlay').classList.add('show');
 });
 
